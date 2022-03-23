@@ -24,11 +24,11 @@ public class Ex5 {
                 i--;
             }
         }
-        for (i = 0; i < 6; i++) {
-            System.out.println(loto[i]);
-        }
+        // for (i = 0; i < 6; i++) {
+        //     System.out.println(loto[i]);
+        // }
         Scanner input = new Scanner(System.in);
-
+            System.out.println("Digite seus numeros:");
         for (i = 0; i < 6; i++) {
             teste = false;
             n = input.nextInt();
@@ -47,6 +47,12 @@ public class Ex5 {
         // for (i = 0; i < 6; i++) {
         //     System.out.println(user[i]);
         // }
+
+        System.out.print("Numeros sorteados: ");
+        for (i = 0; i < 5; i++) {
+            System.out.print(loto[i] + ", ");
+        }
+        System.out.println(loto[5]);
 
         acertos = 0;
 
