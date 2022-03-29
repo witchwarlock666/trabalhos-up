@@ -1,8 +1,10 @@
+// Fabricio Bertoncello Filho e Felipe Lacerda
+
 import java.util.Random;
 import java.util.Scanner;
 
 public class Ex5 {
-    public static void main(String[] args) {
+    public static void main(String args[]) {
         Random random = new Random();
         int i, n, j, acertos;
         int[] loto = new int[6];
@@ -24,9 +26,6 @@ public class Ex5 {
                 i--;
             }
         }
-        // for (i = 0; i < 6; i++) {
-        //     System.out.println(loto[i]);
-        // }
         Scanner input = new Scanner(System.in);
             System.out.println("Digite seus numeros:");
         for (i = 0; i < 6; i++) {
@@ -44,9 +43,6 @@ public class Ex5 {
                 i--;
             }
         }
-        // for (i = 0; i < 6; i++) {
-        //     System.out.println(user[i]);
-        // }
 
         System.out.print("Numeros sorteados: ");
         for (i = 0; i < 5; i++) {
