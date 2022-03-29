@@ -1,82 +1,43 @@
-// Exercício feito por Fabrício e Felipe
+// Fabricio Bertoncello Filho e Felipe Lacerda
+
 import java.util.Scanner;
 
+public class Ex1 {
 
-public class teste {
+    public static void main(String args[]) {
 
+        Scanner myObj = new Scanner(System.in);
 
- public static void main(String args[]) {
+        int acumulo;
 
+        System.out.print("Olá, digite o número desejado para fatorial: ");
 
+        int x = myObj.nextInt();
 
+        myObj.close();
 
-  Scanner myObj = new Scanner(System.in);
+        int i;
 
+        acumulo = 1;
 
-  int acumulo;
+        if (x > 0) {
 
+            for (i = x; i > 0; i--) {
 
-  System.out.println("Olá, digite o número desejado para fatorial: ");
+                acumulo = acumulo * i;
 
+            }
 
-  int x = myObj.nextInt();
+            System.out.print(x + "! = " + acumulo);
 
-  int i;
+        } else if (x == 0) {
 
+            System.out.print(x + "! = " + acumulo);
 
+        } else {
+            System.out.print("Impossivel calcular fatorial de numeros negativos.");
+        }
 
+    }
 
-  acumulo = 1;
-
-
-
-
- if(x>0) {
-
-
-
-
-  for(i=x; i>0; i--) {
-
-
-
-
-  acumulo = acumulo * i;
-
-
-
-
- }
-
-
-
-
- System.out.print("Fatorial de "+ x );
-
- System.out.println("\n e  " + acumulo);
-
-
-
-
-
- }
-
-
-
-
- else {
-
-
-
-
- System.out.print("Impossível realizar conta, x<0.");
-
-
-
-
- }
-
-
- }
-
-} 
+}

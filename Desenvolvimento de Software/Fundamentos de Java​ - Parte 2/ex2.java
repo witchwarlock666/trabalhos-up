@@ -1,42 +1,51 @@
+// Fabricio Bertoncello Filho e Felipe Lacerda
+
 import java.util.Scanner;
 
-// exercício feito por Felipe e Fabrício
-public class exe2 {
+public class Ex2 {
 
- public static void main(String args[]) {
+    public static void fibonacci(int x) {
 
-  Scanner x = new scanner(System.in);
+        int i;
 
-  int j;
+        if (x < 0) {
+            System.out.println("Erro! Digite um numero positivo");
+        }
+        else if (x == 0) {
+            System.out.println("0");
+        }
+        else if (x == 1) {
+            System.out.println("0, 1");
+        }
+        else {
+            int n0 = 0, n1 = 1, n2;
+            System.out.print("0, 1, ");
+            for (i = 1; i < x; i++) {
+                n2 = n0 + n1;
+                if (i != x-1) {
+                    System.out.print(n2 + ", ");
+                }
+                else {
+                    System.out.println(n2);
+                }
+                n0 = n1;
+                n1 = n2;
+            }
+        }
 
-  System.out.println("Olá digite o número para efetuar a soma");
+    }
 
-  int y = x.nextInt();
+    public static void main(String args[]) {
 
+        Scanner input = new Scanner(System.in);
 
-  if(x=!0 && x=!1 ){
+        System.out.print("Digite o indice da sequencia de Fibonacci desejado: ");
+        int x = input.nextInt();
 
-   
+        input.close();
 
-   j = (x-1) + (x-2);
+        fibonacci(x);
 
-   System.out.print(" Número é : " + j);
-
-
-  }
-
-
-
-  else {
-
-
-  System.out.print("Impossível realizar conta, x=0 ou x=1");
-
- 
-
-
- }
-
- }
+    }
 
 }
