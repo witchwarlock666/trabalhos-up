@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 // exercício feito por Felipe e Fabrício
-public class testefoda {
+public class exe2 {
 
  public static void main(String args[]) {
 
