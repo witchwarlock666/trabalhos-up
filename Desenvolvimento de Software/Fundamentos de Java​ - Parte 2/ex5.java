@@ -14,6 +14,7 @@ public class Ex5 {
         for (i = 0; i < 6; i++) {
             teste = false;
             n = 1 + random.nextInt(60);
+
             for (j = 0; j < loto.length; j++) {
                 if (n == loto[j]) {
                     teste = true;
@@ -31,16 +32,23 @@ public class Ex5 {
         for (i = 0; i < 6; i++) {
             teste = false;
             n = input.nextInt();
-            for (j = 0; j < user.length; j++) {
-                if (n == user[j]) {
-                    teste = true;
-                }
-            }
-            
-            if (!teste) {
-                user[i] = n;
-            } else {
+
+            if (n > 60 || n < 1) {
+                System.out.println("Digite um numero entre 1 e 60");
                 i--;
+            }
+            else {
+                for (j = 0; j < user.length; j++) {
+                    if (n == user[j]) {
+                        teste = true;
+                    }
+                }
+                
+                if (!teste) {
+                    user[i] = n;
+                } else {
+                    i--;
+                }
             }
         }
 
