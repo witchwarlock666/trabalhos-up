@@ -1,0 +1,172 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+#pragma warning(disable : 4996)
+
+typedef struct {
+	char nome[101];
+	int diaNasc;
+	int mesNasc;
+	int anoNasc;
+} pessoa;
+
+int main(int argc, char* argv[]) {
+
+	ex1();
+	ex2();
+	ex3();
+	ex4();
+	ex5();
+
+	return 0;
+}
+
+int ex1() {
+	int vet[6];
+	int x, i;
+
+	vet[0] = 1;
+	vet[1] = 0;
+	vet[2] = 5;
+	vet[3] = -2;
+	vet[4] = -5;
+	vet[5] = 7;
+
+	x = vet[0] + vet[1] + vet[5];
+	printf("%d\n\n", x);
+
+	vet[4] = 70;
+
+	for (i = 0; i < 6; i++) {
+		printf("%d\n", vet[i]);
+	}
+}
+
+int ex2() {
+	int mat[4][4];
+	int i, j, x;
+
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			mat[i][j] = (j + 1) + (i * 4);
+		}
+	}
+
+	printf("Digite um numero: ");
+	scanf("%d", &x);
+
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			if (mat[i][j] == x) {
+				printf("[%d][%d] ", i, j);
+			}
+		}
+	}
+}
+
+int ex3() {
+	pessoa p[3];
+	int i, ano = 2022, mes = 4, dia = 5, idade, mesComp, diaComp;
+	
+	for (i = 0; i < 3; i++) {
+		printf("\nDigite o nome da pessoa %d: ", i + 1);
+		scanf(" %100[^\n]", &p[i].nome);
+		printf("Digite o ano de nascimento: ");
+		scanf("%d", &p[i].anoNasc);
+		printf("Digite o mes de nascimento: ");
+		scanf("%d", &p[i].mesNasc);
+		printf("Digite o dia de nascimento: ");
+		scanf("%d", &p[i].diaNasc);
+	}
+
+	for (i = 0; i < 3; i++) {
+		idade = ano - p[i].anoNasc;
+		mesComp = mes - p[i].mesNasc;
+		diaComp = dia - p[i].diaNasc;
+
+		if (mesComp > 0) {
+			printf("Idade: %d\n", idade);
+		}
+		else if (mesComp == 0) {
+			if (diaComp >= 0) {
+				printf("Idade: %d\n", idade);
+			}
+			else {
+				printf("Idade: %d\n", idade - 1);
+			}
+		}
+		else {
+			printf("Idade: %d\n", idade - 1);
+		}
+	}
+}
+
+int ex4() {
+	time_t t = time(NULL);
+	struct tm tm = *localtime(&t);
+
+	proc(tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+}
+
+int ex5() {
+	int a, b, *p1, *p2;
+
+	printf("Digite o valor de a: ");
+	scanf("%d", &a);
+	printf("Digite o valor de b: ");
+	scanf("%d", &b);
+
+	p1 = &a;
+	p2 = &b;
+
+	(*p1) += a;
+	(*p2) += b;
+
+	printf("a: %d\nb: %d", a, b);
+}
+
+int proc(int ano, int mes, int dia) {
+	const char mesExt[10];
+	switch (mes) {
+	case 1: 
+		strcpy(mesExt, "Janeiro");
+		break;
+	case 2:
+		strcpy(mesExt, "Fevereiro");
+		break;
+	case 3:
+		strcpy(mesExt, "Marco");
+		break;
+	case 4:
+		strcpy(mesExt, "Abril");
+		break;
+	case 5:
+		strcpy(mesExt, "Maio");
+		break;
+	case 6:
+		strcpy(mesExt, "Junho");
+		break;
+	case 7:
+		strcpy(mesExt, "Julho");
+		break;
+	case 8:
+		strcpy(mesExt, "Agosto");
+		break;
+	case 9:
+		strcpy(mesExt, "Setembro");
+		break;
+	case 10:
+		strcpy(mesExt, "Outubro");
+		break;
+	case 11:
+		strcpy(mesExt, "Novembro");
+		break;
+	case 12:
+		strcpy(mesExt, "Dezembro");
+		break;
+	}
+
+	printf("%d de %s de %d\n", dia, mesExt, ano);
+}
