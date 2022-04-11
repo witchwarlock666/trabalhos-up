@@ -13,12 +13,31 @@ typedef struct {
 } pessoa;
 
 int main(int argc, char* argv[]) {
+	int x, a;
 
-	ex1();
-	ex2();
-	ex3();
-	ex4();
-	ex5();
+	do {
+		printf("Digite o item do menu que deseja acessar:\n0) Sair\n1) Vetor\n2) Matriz\n3) Struct\n4) Procedimento\n5) Ponteiro\n");
+		scanf("%d", &x);
+
+		switch (x) {
+			case 1:
+				a = ex1();
+				break;
+			case 2:
+				a = ex2();
+				break;
+			case 3:
+				a = ex3();
+				break;
+			case 4:
+				a = ex4();
+				break;
+			case 5:
+				a = ex5();
+				break;
+		}
+		printf("\n");
+	}while (x != 0);
 
 	return 0;
 }
