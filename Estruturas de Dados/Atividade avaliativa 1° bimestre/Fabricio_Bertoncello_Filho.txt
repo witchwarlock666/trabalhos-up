@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 #include <string.h>
 
@@ -130,20 +128,16 @@ int ex4() {
 }
 
 int ex5() {
-	int a, b, *p1, *p2;
+	int a, b, x;
 
 	printf("Digite o valor de a: ");
 	scanf("%d", &a);
 	printf("Digite o valor de b: ");
 	scanf("%d", &b);
 
-	p1 = &a;
-	p2 = &b;
+	x = func(&a, &b);
 
-	(*p1) += a;
-	(*p2) += b;
-
-	printf("a: %d\nb: %d", a, b);
+	printf("a: %d\nb: %d\na + b: %d", a, b, x);
 }
 
 int proc(int ano, int mes, int dia) {
@@ -188,4 +182,11 @@ int proc(int ano, int mes, int dia) {
 	}
 
 	printf("%d de %s de %d\n", dia, mesExt, ano);
+}
+
+int func(int *pa, int  *pb) {
+	(*pa) *= 2;
+	(*pb) *= 2;
+
+	return (*pa) + (*pb);
 }

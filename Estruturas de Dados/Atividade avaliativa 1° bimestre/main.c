@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 #include <string.h>
 
@@ -20,24 +18,24 @@ int main(int argc, char* argv[]) {
 		scanf("%d", &x);
 
 		switch (x) {
-			case 1:
-				a = ex1();
-				break;
-			case 2:
-				a = ex2();
-				break;
-			case 3:
-				a = ex3();
-				break;
-			case 4:
-				a = ex4();
-				break;
-			case 5:
-				a = ex5();
-				break;
+		case 1:
+			a = ex1();
+			break;
+		case 2:
+			a = ex2();
+			break;
+		case 3:
+			a = ex3();
+			break;
+		case 4:
+			a = ex4();
+			break;
+		case 5:
+			a = ex5();
+			break;
 		}
 		printf("\n");
-	}while (x != 0);
+	} while (x != 0);
 
 	return 0;
 }
@@ -88,7 +86,7 @@ int ex2() {
 int ex3() {
 	pessoa p[3];
 	int i, ano = 2022, mes = 4, dia = 5, idade, mesComp, diaComp;
-	
+
 	for (i = 0; i < 3; i++) {
 		printf("\nDigite o nome da pessoa %d: ", i + 1);
 		scanf(" %100[^\n]", &p[i].nome);
@@ -130,26 +128,22 @@ int ex4() {
 }
 
 int ex5() {
-	int a, b, *p1, *p2;
+	int a, b, x;
 
 	printf("Digite o valor de a: ");
 	scanf("%d", &a);
 	printf("Digite o valor de b: ");
 	scanf("%d", &b);
 
-	p1 = &a;
-	p2 = &b;
+	x = func(&a, &b);
 
-	(*p1) += a;
-	(*p2) += b;
-
-	printf("a: %d\nb: %d", a, b);
+	printf("a: %d\nb: %d\na + b: %d", a, b, x);
 }
 
 int proc(int ano, int mes, int dia) {
 	const char mesExt[10];
 	switch (mes) {
-	case 1: 
+	case 1:
 		strcpy(mesExt, "Janeiro");
 		break;
 	case 2:
@@ -188,4 +182,11 @@ int proc(int ano, int mes, int dia) {
 	}
 
 	printf("%d de %s de %d\n", dia, mesExt, ano);
+}
+
+int func(int* pa, int* pb) {
+	(*pa) *= 2;
+	(*pb) *= 2;
+
+	return (*pa) + (*pb);
 }
