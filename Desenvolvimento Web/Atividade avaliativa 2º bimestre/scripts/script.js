@@ -121,10 +121,10 @@ const atv9 = () => {
 
     for (i = 1; i <= 10; i++) {
         if (i < 10) {
-            str += n + " x " + i + " = " + n*i + ", ";
+            str += n + " x " + i + " = " + n * i + ", ";
         }
         else {
-            str += n + " x " + i + " = " + n*i;
+            str += n + " x " + i + " = " + n * i;
         }
     }
     alert(str);
@@ -135,7 +135,7 @@ const atv10 = () => {
     let ini = n
 
     if (n > 0) {
-        for (i = n-1; i > 0; i--) {
+        for (i = n - 1; i > 0; i--) {
             n = n * i;
         }
     }
@@ -145,19 +145,19 @@ const atv10 = () => {
     else {
         n = "Não existe";
     }
-    
+
     alert(ini + "! = " + n);
 }
 
 const getDia = (dia) => {
     let dias = {
-        1:  'Domingo',
-        2:  'Segunda',
-        3:  'Terça',
-        4:  'Quarta',
-        5:  'Quinta',
-        6:  'Sexta',
-        7:  'Sabado',
+        1: 'Domingo',
+        2: 'Segunda',
+        3: 'Terça',
+        4: 'Quarta',
+        5: 'Quinta',
+        6: 'Sexta',
+        7: 'Sabado',
         'default': 'Erro!'
     };
 
@@ -174,10 +174,20 @@ const swap = (n, i, j) => {
 const bubble = (n) => {
     for (i = 0; i < n.length - 1; i++) {
         for (j = 0; j < n.length - i - 1; j++) {
-            if (n[j] > n[j+1]) {
-                n = swap(n, j, j+1);
+            if (n[j] > n[j + 1]) {
+                n = swap(n, j, j + 1);
             }
         }
     }
     return n;
+}
+
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
 }
