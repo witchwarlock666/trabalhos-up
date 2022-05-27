@@ -9,42 +9,45 @@ def findsubsets(s, n):
 s = {1, 2, 3} 
 n = 2
 
+#ex 1
 conjunto1 = [1, 2, 3, 4, 5]
 conjunto2 = ["a", "b", "c", "d", "e"]
-print("1)")
+
+#ex 2
 for c1 in conjunto1:
     for c2 in conjunto2:
         str(c1)
         print ("[{}, {}]\n".format(c1, c2))
 
+#ex 3
 i = 0
-print("\n2) 1)\n")
 while (i <= len(conjunto1)):
     print(findsubsets(conjunto1, i))
     i += 1
 
 i = 0
-print("\n2) 2)\n")
 while (i <= len(conjunto2)):
     print(findsubsets(conjunto2, i))
     i += 1
 
-conjunto3 = [1, 2, 3]
+#ex 4
+conjunto3 = [1, 2, 3, 4]
+
+#ex 5
 
 sub = findsubsets(conjunto3, 2)
 
 subs = [sub[0], sub[2]]
 
-print("\n5)\n")
+#ex 6
 print(subs)
 
-print("\n6)")
-print("\n111\n")
-print("010\n")
-print("100\n")
-print("001\n")
+print("\n1101\n")
+print("1000\n")
+print("0100\n")
+print("0011\n")
 
-print("7)\n")
+#ex 7
 n = 5
 resultados = [None, None, None, None, None]
 x = 0
@@ -67,3 +70,6 @@ while (cont):
 
 if (inj):
     print("Injetora")
+
+print("Aperte enter para finalizar: ")
+input()
