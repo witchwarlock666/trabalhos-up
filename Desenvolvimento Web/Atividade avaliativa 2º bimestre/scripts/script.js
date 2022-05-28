@@ -110,7 +110,9 @@ const atv7 = () => {
 const atv8 = () => {
     soma = 0;
     for (i = 0; i <= 20; i++) {
-        soma += i;
+        if (i % 2 == 0) {
+            soma += i;
+        }
     }
     alert(soma);
 }
