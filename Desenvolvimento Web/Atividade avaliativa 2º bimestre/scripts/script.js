@@ -182,12 +182,43 @@ const bubble = (n) => {
     return n;
 }
 
-function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
+const openCloseNav = () => {
+    let sidebar = document.getElementById("mySidebar");
+    let main = document.getElementById("main");
+    if (sidebar.style.width == "58px" || sidebar.style.width == '') {
+        sidebar.style.width = "200px";
+        main.style.marginLeft = "200px";
+        sleep(500);
+        document.getElementById("opencloseicon").classList.remove('mdi-menu');
+        document.getElementById("opencloseicon").classList.add('mdi-close');
+        document.getElementById("i").innerHTML = "Atividade 1";
+        document.getElementById("ii").innerHTML = "Atividade 2";
+        document.getElementById("iii").innerHTML = "Atividade 3";
+        document.getElementById("iv").innerHTML = "Atividade 4";
+        document.getElementById("v").innerHTML = "Atividade 5";
+        document.getElementById("vi").innerHTML = "Atividade 6";
+        document.getElementById("vii").innerHTML = "Atividade 7";
+        document.getElementById("viii").innerHTML = "Atividade 8";
+        document.getElementById("ix").innerHTML = "Atividade 9";
+        document.getElementById("x").innerHTML = "Atividade 10";
+    }
+    else {
+        sidebar.style.width = "58px";
+        main.style.marginLeft = "58px";
+        sleep(500);
+        document.getElementById("opencloseicon").classList.remove('mdi-close');
+        document.getElementById("opencloseicon").classList.add('mdi-menu');
+        document.getElementById("i").innerHTML = "";
+        document.getElementById("ii").innerHTML = "";
+        document.getElementById("iii").innerHTML = "";
+        document.getElementById("iv").innerHTML = "";
+        document.getElementById("v").innerHTML = "";
+        document.getElementById("vi").innerHTML = "";
+        document.getElementById("vii").innerHTML = "";
+        document.getElementById("viii").innerHTML = "";
+        document.getElementById("ix").innerHTML = "";
+        document.getElementById("x").innerHTML = "";
+    }
 }
 
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-}
+const sleep = ms => new Promise(r => setTimeout(r, ms));

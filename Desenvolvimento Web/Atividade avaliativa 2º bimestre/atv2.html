@@ -1,17 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atividade 2</title>
     <script src="./scripts/script.js"></script>
+    <link rel="icon" href="./images/logo-javascript-256.png" type="image/png">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
 </head>
+
 <body>
-    <h1>Atividade 2</h1>
-    <p>Tendo como dados de entrada a altura e o gênero de uma pessoa, escreva um script que calcule o seu peso ideal. Para homens, utilize a fórmula (72.7 * altura) – 58. Para mulheres, e utilize a fórmula (62.1 * altura) – 44.7.</p>
-    <button onclick="atv2()">Botão</button>
-    <br>
-    <a href="./index.html">Voltar</a>
+    <div id="mySidebar" class="sidebar">
+        <div style="display: block; width: 100%;height:53px">
+            <button class="openbtn" onclick="openCloseNav()"><span class="mdi mdi-menu"></span></button>
+        </div>
+        <a href="./atv1.html" class="mdi mdi-roman-numeral-1" id="i"></a>
+        <a href="./atv2.html" class="mdi mdi-roman-numeral-2" id="ii"></a>
+        <a href="./atv3.html" class="mdi mdi-roman-numeral-3" id="iii"></a>
+        <a href="./atv4.html" class="mdi mdi-roman-numeral-4" id="iv"></a>
+        <a href="./atv5.html" class="mdi mdi-roman-numeral-5" id="v"></a>
+        <a href="./atv6.html" class="mdi mdi-roman-numeral-6" id="vi"></a>
+        <a href="./atv7.html" class="mdi mdi-roman-numeral-7" id="vii"></a>
+        <a href="./atv8.html" class="mdi mdi-roman-numeral-8" id="viii"></a>
+        <a href="./atv9.html" class="mdi mdi-roman-numeral-9" id="ix"></a>
+        <a href="./atv10.html" class="mdi mdi-roman-numeral-10" id="x"></a>
+    </div>
+    <main id="main">
+        <div class="navbar">
+            <a class="active" href="./index.html"><i class="mdi mdi-home"></i> Home</a>
+            <a href="https://github.com/witchwarlock666/Atividade-avaliativa-2-bimestre-desenvolvimento-web"
+                target="_blank"><i class="mdi mdi-github"></i> Github</a>
+        </div>
+        <div class="main-content">
+            <h1>Atividade 2</h1>
+            <p>Tendo como dados de entrada a altura e o gênero de uma pessoa, escreva um script que calcule o seu peso
+                ideal. Para homens, utilize a fórmula (72.7 * altura) – 58. Para mulheres, e utilize a fórmula (62.1 *
+                altura) – 44.7.</p>
+            <button onclick="atv2()" class="btn btn-primary">Clicar</button>
+            <a onclick="history.back()" class="btn btn-danger">Voltar</a>
+        </div>
+    </main>
 </body>
+
 </html>
