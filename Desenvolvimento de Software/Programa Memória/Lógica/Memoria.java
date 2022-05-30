@@ -7,8 +7,12 @@ import java.util.Random;
 public class Memoria{
 
     public int[][] numeros = new int[4][4];
+    public int first;
+    public int second;
+    public boolean inPlay;
 
     public Memoria(){
+        inPlay = false;
     }
     
     public void gerarNumeros() {
@@ -33,6 +37,10 @@ public class Memoria{
 
     public int getNum(int i, int j) {
         return numeros[i][j];
+    }
+
+    public String getVal(int i, int j) {
+        return "";
     }
 
  }
