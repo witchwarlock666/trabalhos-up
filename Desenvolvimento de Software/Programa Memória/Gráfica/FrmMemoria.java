@@ -1,76 +1,44 @@
-
-//n tenho a menor ideia doq eu to fazendo
-
 package Gráfica;
 
 import javax.swing.JFrame;
-import java.awt.FlowLayout;  
-import java.awt.event.ItemEvent;     
 import javax.swing.JToggleButton;
 
+import Lógica.Memoria;
 
+import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
 
+public class FrmMemoria extends JFrame {
 
-public class FrmMemoria extends JFrame{
-   
-    private JToggleButton button; 
+    private JToggleButton button;
+    public Memoria memoria = new Memoria();
 
-    public FrmMemoria(){
-        super("Memory Game");
+    public FrmMemoria() {
+        super("Jogo da memoria");
         this.setBounds(200, 100, 500, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setJToggleButton();  
-        setLayout(new FlowLayout());  
+        memoria.gerarNumeros();
+        setJToggleButton();
+        this.setLayout(new GridLayout(4, 4, 10, 10));
 
-     }
-
-     private void setJToggleButton() {  
-        button = new JToggleButton("ON"); 
-        //button.addActionListener(new java.awt.event.ActionListener() {
-           //@Override
-           // public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
-            //}
-        //});
-        add(button);
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button);   
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-        button = new JToggleButton("ON");  
-        add(button); 
-    }  
-        
-        public void itemStateChanged(ItemEvent eve) {  
-        if (button.isSelected())  
-            button.setText("OFF");  
-        else  
-            button.setText("ON");  
     }
-}    
-  
- 
+
+    private void setJToggleButton() {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                int num = memoria.getNum(i, j);
+                String n = Integer.toString(num);
+                button = new JToggleButton(n);
+                add(button);
+                button.addActionListener(new ActionBotao(num, false));
+            }
+        }
+    }
+
+    public void itemStateChanged(ItemEvent eve) {
+        if (button.isSelected())
+            button.setText("OFF");
+        else
+            button.setText("ON");
+    }
+}
