@@ -44,22 +44,26 @@ public class FrmCalc extends JFrame {
         JComboBox cb = new JComboBox(operacao);
         pnl.add(cb);
 
-        JButton btn = new JButton("=");
+        JButton btn = new JButton("Calcular");
         btn.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String txtAntigo = jTextFieldx.getText();
-                calculadora.setOperando1(Double.parseDouble(txtAntigo.replace(",", ".")));
-                String txtAntigo2 = jTextFieldy.getText();
-                calculadora.setOperando2(Double.parseDouble(txtAntigo.replace(",", ".")));
-                calculadora.setOperacao(cb.getSelectedIndex());
-                cataValorFInal = calculadora.calcular();
-                Object[] options = { "SIM", "NÃO" };
-                JOptionPane.showOptionDialog(null,
-                        "Sua conta solicitada deu: " + cataValorFInal + "\n Deseja Continuar?",
-                        "Aviso",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                        null, options, options[0]);
+                try {
+                    String txtAntigo = jTextFieldx.getText();
+                    calculadora.setOperando1(Double.parseDouble(txtAntigo.replace(",", ".")));
+                    String txtAntigo2 = jTextFieldy.getText();
+                    calculadora.setOperando2(Double.parseDouble(txtAntigo2.replace(",", ".")));
+                    calculadora.setOperacao(cb.getSelectedIndex());
+                    cataValorFInal = calculadora.calcular();
+                    Object[] options = { "OK" };
+                    JOptionPane.showOptionDialog(null,
+                            "Sua conta solicitada deu: " + cataValorFInal,
+                            "Aviso",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                            null, options, options[0]);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Valor inválido para a operação! \n OBS: digite um número válido", "ERRO", JOptionPane.ERROR_MESSAGE);
+                }
 
             }
         });
