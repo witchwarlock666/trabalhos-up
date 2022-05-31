@@ -42,6 +42,28 @@ public class Memoria{
     public String getVal(int i, int j) {
         return "";
     }
+    public boolean CompararNums(int first, int second){
+        
+        return true;
 
+    }
+    public void setFirst(int first) {
+        this.first = first;
+    }
+    public void setSecond(int second) {
+        this.second = second;
+    }
+    public int getFirst() {
+        return first;
+    }
+    public int getSecond() {
+        return second;
+    }
+    public void setInPlay(boolean inPlay) {
+        this.inPlay = inPlay;
+    }
+    public boolean getInPlay() {
+        return this.inPlay;
+    }
  }
     

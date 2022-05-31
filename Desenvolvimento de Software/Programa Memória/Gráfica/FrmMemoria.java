@@ -66,6 +66,8 @@ public class FrmMemoria extends JFrame {
         // });
         // }
         // }
+    
+
         num = memoria.getNum(0, 0);
         n[0] = Integer.toString(num);
         btn1 = new JToggleButton();
@@ -75,11 +77,22 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn1.isSelected()) {
                     btn1.setText(n[0]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[0]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[0]));
+                        memoria.setInPlay(true);
+                    }
+                   
+
                 } else {
                     btn1.setText("");
                 }
             }
         });
+
+        // Copiar essa parada pro resto ai fazer o esquema de aparecer por 5 seg ------^^^^
         num = memoria.getNum(0, 1);
         n[1] = Integer.toString(num);
         btn2 = new JToggleButton();
@@ -89,6 +102,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn2.isSelected()) {
                     btn2.setText(n[1]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[1]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[1]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn2.setText("");
                 }
@@ -103,6 +123,14 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn3.isSelected()) {
                     btn3.setText(n[2]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[2]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[2]));
+                        memoria.setInPlay(true);
+                    }
+                      
                 } else {
                     btn3.setText("");
                 }
@@ -117,6 +145,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn4.isSelected()) {
                     btn4.setText(n[3]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[3]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[3]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn4.setText("");
                 }
@@ -131,6 +166,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn5.isSelected()) {
                     btn5.setText(n[4]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[4]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[4]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn5.setText("");
                 }
@@ -145,6 +187,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn6.isSelected()) {
                     btn6.setText(n[5]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[5]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[5]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn6.setText("");
                 }
@@ -159,6 +208,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn7.isSelected()) {
                     btn7.setText(n[6]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[6]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[6]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn7.setText("");
                 }
@@ -173,6 +229,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn8.isSelected()) {
                     btn8.setText(n[7]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[7]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[7]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn8.setText("");
                 }
@@ -187,6 +250,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn9.isSelected()) {
                     btn9.setText(n[8]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[8]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[8]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn9.setText("");
                 }
@@ -201,6 +271,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn10.isSelected()) {
                     btn10.setText(n[9]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[9]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[9]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn10.setText("");
                 }
@@ -215,6 +292,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn11.isSelected()) {
                     btn11.setText(n[10]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[10]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[10]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn11.setText("");
                 }
@@ -229,6 +313,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn12.isSelected()) {
                     btn12.setText(n[11]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[11]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[11]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn12.setText("");
                 }
@@ -243,6 +334,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn13.isSelected()) {
                     btn13.setText(n[12]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[12]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[12]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn13.setText("");
                 }
@@ -257,6 +355,13 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn14.isSelected()) {
                     btn14.setText(n[13]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[13]));
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[13]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn14.setText("");
                 }
