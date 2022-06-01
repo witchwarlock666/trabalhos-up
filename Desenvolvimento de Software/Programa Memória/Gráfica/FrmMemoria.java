@@ -30,6 +30,7 @@ public class FrmMemoria extends JFrame {
     private JToggleButton btn14;
     private JToggleButton btn15;
     private JToggleButton btn16;
+    private boolean selection;
     private Memoria memoria = new Memoria();
     private JToggleButton[][] botoes;
     private int num;
@@ -53,9 +54,11 @@ public class FrmMemoria extends JFrame {
         }
 
     }
- 
 
-    private void setJToggleButton() {
+
+    public void setJToggleButton(){
+
+  
         // for (int i = 0; i < 4; i++) {
         // for (int j = 0; j < 4; j++) {
         // int num = memoria.getNum(i, j);
@@ -76,7 +79,8 @@ public class FrmMemoria extends JFrame {
         // }
         // }
     
-        
+        /*Arrumemo, tem que disselecionar o botão depois da primeira verificação, só que não sei como colocar um timer 
+        antes da deceleção  pra pode fica aparecendo o número  ai n sei comeq faz essa bagunça.*/
         num = memoria.getNum(0, 0);
         n[0] = Integer.toString(num);
         btn1 = new JToggleButton();
@@ -84,26 +88,37 @@ public class FrmMemoria extends JFrame {
         btn1.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent event) {
-                if (btn1.isSelected()) {
-                    btn1.setText(n[0]);
-                    if(memoria.getInPlay()){
-                        memoria.setSecond(Integer.parseInt(n[0]));
-                        memoria.setIsFinished(true);
-                        setWarnings();
-
-                    } else{
-                        memoria.setFirst(Integer.parseInt(n[0]));
-                        memoria.setInPlay(true);
-                    }
-                   
-
-                } else {
-                    btn1.setText("");
+                //public void run(){
+                    if(selection){
+                        //Thread.sleep(5000);
+                        btn1.setSelected(false);
+    
+                    }    
+                    if (btn1.isSelected()) {
+                            btn1.setText(n[0]);
+                            if(memoria.getInPlay()){
+                                memoria.setSecond(Integer.parseInt(n[0]));
+                                memoria.setIsFinished(true);
+                                setWarnings();
+        
+                            } else{
+                                memoria.setFirst(Integer.parseInt(n[0]));
+                                memoria.setInPlay(true);
+                            }
+                            
+                           selection = true;
+        
+                        } else {
+                            btn1.setText("");
+                        }  
                 }
-            }
-        });
+               // }
+            });
+    
+               
 
-        // inPlay ta dando retorno verdadeiro no primeiro clique (????) 
+    
+
         num = memoria.getNum(0, 1);
         n[1] = Integer.toString(num);
         btn2 = new JToggleButton();
@@ -116,6 +131,7 @@ public class FrmMemoria extends JFrame {
                     if(memoria.getInPlay()){
                         memoria.setSecond(Integer.parseInt(n[1]));
                         memoria.setIsFinished(true);
+                        setWarnings();
                         
 
                     } else{
@@ -453,10 +469,10 @@ public class FrmMemoria extends JFrame {
        
        
    
-    }
-
     
-
+        }
+        }
+    
     // public void itemStateChanged(ItemEvent eve) {
     // if (button.isSelected())
     // button.setText("OFF");
@@ -467,4 +483,3 @@ public class FrmMemoria extends JFrame {
     // private void setBotoes() {
 
     // }
-}
