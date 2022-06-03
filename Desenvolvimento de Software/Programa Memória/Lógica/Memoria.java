@@ -10,6 +10,7 @@ public class Memoria{
     public int first;
     public int second;
     public boolean inPlay;
+    public boolean IsFinished;
 
     public Memoria(){
         inPlay = false;
@@ -35,6 +36,7 @@ public class Memoria{
         }
     }
 
+
     public int getNum(int i, int j) {
         return numeros[i][j];
     }
@@ -43,5 +45,43 @@ public class Memoria{
         return "";
     }
 
+    public boolean CompararNums(int first, int second){
+        if(getIsFinished()){
+            if(first == second){
+                return true;
+            } else{
+                return false;
+            }
+        }
+        return false;
+    }
+    
+
+    public void setIsFinished(boolean isFinished) {
+        this.IsFinished = isFinished;
+    }
+
+    public boolean getIsFinished() {
+        return IsFinished;
+    }
+
+    public void setFirst(int first) {
+        this.first = first;
+    }
+    public void setSecond(int second) {
+        this.second = second;
+    }
+    public int getFirst() {
+        return first;
+    }
+    public int getSecond() {
+        return second;
+    }
+    public void setInPlay(boolean inPlay) {
+        this.inPlay = inPlay;
+    }
+    public boolean getInPlay() {
+        return this.inPlay;
+    }
  }
     

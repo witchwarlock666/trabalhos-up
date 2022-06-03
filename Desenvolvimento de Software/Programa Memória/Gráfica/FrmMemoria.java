@@ -4,12 +4,13 @@ import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.JOptionPane;
 
 import Lógica.Memoria;
 
 import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.util.List;
+
+
 
 public class FrmMemoria extends JFrame {
 
@@ -29,6 +30,7 @@ public class FrmMemoria extends JFrame {
     private JToggleButton btn14;
     private JToggleButton btn15;
     private JToggleButton btn16;
+    private boolean selection;
     private Memoria memoria = new Memoria();
     private JToggleButton[][] botoes;
     private int num;
@@ -37,7 +39,7 @@ public class FrmMemoria extends JFrame {
     public FrmMemoria() {
         super("Jogo da memoria");
         botoes = new JToggleButton[4][4];
-        setBotoes();
+        //setBotoes();
         this.setBounds(200, 100, 500, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         memoria.gerarNumeros();
@@ -45,8 +47,18 @@ public class FrmMemoria extends JFrame {
         this.setLayout(new GridLayout(4, 4, 10, 10));
 
     }
+    private void setWarnings(){
+        if(memoria.IsFinished && memoria.inPlay){
+            JOptionPane.showMessageDialog(null, "Parabéns, você acertou!",
+            "Parabéns!!!", JOptionPane.INFORMATION_MESSAGE);
+        }
 
-    private void setJToggleButton() {
+    }
+
+
+    public void setJToggleButton(){
+
+  
         // for (int i = 0; i < 4; i++) {
         // for (int j = 0; j < 4; j++) {
         // int num = memoria.getNum(i, j);
@@ -66,6 +78,9 @@ public class FrmMemoria extends JFrame {
         // });
         // }
         // }
+    
+        /*Arrumemo, tem que disselecionar o botão depois da primeira verificação, só que não sei como colocar um timer 
+        antes da deceleção  pra pode fica aparecendo o número  ai n sei comeq faz essa bagunça.*/
         num = memoria.getNum(0, 0);
         n[0] = Integer.toString(num);
         btn1 = new JToggleButton();
@@ -73,13 +88,37 @@ public class FrmMemoria extends JFrame {
         btn1.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent event) {
-                if (btn1.isSelected()) {
-                    btn1.setText(n[0]);
-                } else {
-                    btn1.setText("");
+                //public void run(){
+                    if(selection){
+                        //Thread.sleep(5000);
+                        btn1.setSelected(false);
+    
+                    }    
+                    if (btn1.isSelected()) {
+                            btn1.setText(n[0]);
+                            if(memoria.getInPlay()){
+                                memoria.setSecond(Integer.parseInt(n[0]));
+                                memoria.setIsFinished(true);
+                                setWarnings();
+        
+                            } else{
+                                memoria.setFirst(Integer.parseInt(n[0]));
+                                memoria.setInPlay(true);
+                            }
+                            
+                           selection = true;
+        
+                        } else {
+                            btn1.setText("");
+                        }  
                 }
-            }
-        });
+               // }
+            });
+    
+               
+
+    
+
         num = memoria.getNum(0, 1);
         n[1] = Integer.toString(num);
         btn2 = new JToggleButton();
@@ -89,6 +128,16 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn2.isSelected()) {
                     btn2.setText(n[1]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[1]));
+                        memoria.setIsFinished(true);
+                        setWarnings();
+                        
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[1]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn2.setText("");
                 }
@@ -103,6 +152,16 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn3.isSelected()) {
                     btn3.setText(n[2]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[2]));
+                        memoria.setIsFinished(true);
+                       
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[2]));
+                        memoria.setInPlay(true);
+                    }
+                      
                 } else {
                     btn3.setText("");
                 }
@@ -117,6 +176,14 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn4.isSelected()) {
                     btn4.setText(n[3]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[3]));
+                        memoria.setIsFinished(true);
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[3]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn4.setText("");
                 }
@@ -131,6 +198,14 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn5.isSelected()) {
                     btn5.setText(n[4]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[4]));
+                        memoria.setIsFinished(true);
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[4]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn5.setText("");
                 }
@@ -145,6 +220,15 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn6.isSelected()) {
                     btn6.setText(n[5]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[5]));
+                        memoria.setIsFinished(true);
+                      
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[5]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn6.setText("");
                 }
@@ -159,6 +243,15 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn7.isSelected()) {
                     btn7.setText(n[6]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[6]));
+                        memoria.setIsFinished(true);
+                        
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[6]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn7.setText("");
                 }
@@ -173,6 +266,15 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn8.isSelected()) {
                     btn8.setText(n[7]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[7]));
+                        memoria.setIsFinished(true);
+                      
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[7]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn8.setText("");
                 }
@@ -187,6 +289,15 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn9.isSelected()) {
                     btn9.setText(n[8]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[8]));
+                        memoria.setIsFinished(true);
+                        
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[8]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn9.setText("");
                 }
@@ -201,6 +312,15 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn10.isSelected()) {
                     btn10.setText(n[9]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[9]));
+                        memoria.setIsFinished(true);
+                       
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[9]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn10.setText("");
                 }
@@ -215,6 +335,14 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn11.isSelected()) {
                     btn11.setText(n[10]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[10]));
+                        memoria.setIsFinished(true);
+                        
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[10]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn11.setText("");
                 }
@@ -229,6 +357,15 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn12.isSelected()) {
                     btn12.setText(n[11]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[11]));
+                        memoria.setIsFinished(true);
+                       
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[11]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn12.setText("");
                 }
@@ -243,6 +380,15 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn13.isSelected()) {
                     btn13.setText(n[12]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[12]));
+                        memoria.setIsFinished(true);
+                        
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[12]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn13.setText("");
                 }
@@ -257,11 +403,21 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn14.isSelected()) {
                     btn14.setText(n[13]);
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[13]));
+                        memoria.setIsFinished(true);
+                       
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[13]));
+                        memoria.setInPlay(true);
+                    }
                 } else {
                     btn14.setText("");
                 }
             }
         });
+
         num = memoria.getNum(3, 2);
         n[14] = Integer.toString(num);
         btn15 = new JToggleButton();
@@ -271,28 +427,52 @@ public class FrmMemoria extends JFrame {
             public void stateChanged(ChangeEvent event) {
                 if (btn15.isSelected()) {
                     btn15.setText(n[14]);
-                } else {
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[14]));
+                        memoria.setIsFinished(true);
+                       
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[14]));
+                        memoria.setInPlay(true);
+                    }
+                    } else{
                     btn15.setText("");
                 }
-            }
-        });
+            
+        }});
+
         num = memoria.getNum(3, 3);
         n[15] = Integer.toString(num);
         btn16 = new JToggleButton();
         add(btn16);
-        btn16.addChangeListener(new ChangeListener() {
+        btn16.addChangeListener(new ChangeListener(){
             @Override
             public void stateChanged(ChangeEvent event) {
                 if (btn16.isSelected()) {
                     btn16.setText(n[15]);
-                } else {
-                    btn16.setText("");
+                    if(memoria.getInPlay()){
+                        memoria.setSecond(Integer.parseInt(n[15]));
+                        memoria.setIsFinished(true);
+                       
+
+                    } else{
+                        memoria.setFirst(Integer.parseInt(n[15]));
+                        memoria.setInPlay(true);
+                    
+                    } 
+                    } else {
+                        btn16.setText("");
+                    }
                 }
-            }
-        });
-
-    }
-
+            });
+       
+       
+   
+    
+        }
+        }
+    
     // public void itemStateChanged(ItemEvent eve) {
     // if (button.isSelected())
     // button.setText("OFF");
@@ -300,7 +480,6 @@ public class FrmMemoria extends JFrame {
     // button.setText("ON");
     // }
 
-    private void setBotoes() {
+    // private void setBotoes() {
 
-    }
-}
+    // }
