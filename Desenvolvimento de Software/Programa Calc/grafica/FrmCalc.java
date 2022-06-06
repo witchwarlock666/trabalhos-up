@@ -1,3 +1,4 @@
+// Fabricio Bertoncelo e Felipe Lacerda
 package grafica;
 
 import javax.swing.AbstractAction;
@@ -7,11 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import logica.Calculadora;
-// import logica.Calculadora.Operacao;
-import logica.Calculadora.Operacao;
 
 import javax.swing.*;
-//import logica.Calculadora.Operacao;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -21,7 +19,6 @@ public class FrmCalc extends JFrame {
     private JTextField jTextFieldx;
     private JTextField jTextFieldy;
     private Calculadora calculadora;
-    // private JOptionPane DropDown;
     private double cataValorFInal;
 
     public FrmCalc() {
