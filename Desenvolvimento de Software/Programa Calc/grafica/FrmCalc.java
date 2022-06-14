@@ -1,4 +1,5 @@
-// Fabricio Bertoncelo e Felipe Lacerda
+//Fabricio Bertoncello Filho e Felipe Lacerda
+
 package grafica;
 
 import javax.swing.AbstractAction;

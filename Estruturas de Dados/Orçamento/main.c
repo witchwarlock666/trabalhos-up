@@ -1,241 +1,170 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 typedef struct {
-	char nome[26];
-	float valor;
-	int count;
+
+	char nome[50];
+	float val;
+	int tipo;
+	int mes;
+
 } despesa;
 
-int countFixo = 0;
+typedef struct {
+
+	char nome[50];
+	float val;
+	int mes;
+
+} entrada;
+
+const char* meses(int n) {
+
+	static char* mes[] = { "Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
+
+	return mes[n - 1];
+}
+
+void flush_in() {
+	int ch;
+	while ((ch = fgetc(stdin)) != EOF && ch != '\n') {}
+}
+
+int countMes[] = {0,0,0,0,0,0,0,0,0,0,0,0};
 
 int main() {
 
-	despesa janeiro[15], fevereiro[15], marco[15], abril[15], maio[15], junho[15], julho[15], agosto[15], setembro[15], outubro[15], novembro[15], dezembro[15];
-	float saldo1[5], saldo2[5], saldo3[5], saldo4[5], saldo5[5], saldo6[5], saldo7[5], saldo8[5], saldo9[5], saldo10[5], saldo11[5], saldo12[5];
-
-	char aaaaa[26];
-	int i;
+	despesa contas[100] = { "null", 0, 0, 0 };
+	entrada entrada[100] = { "null", 0 };
 	int cont = 1;
-	
-	while (cont) {
-		printf("Digite o nome da despesa fixa:\n");
-		gets(aaaaa);
-
-		for (i = 0; i < 26; i++) {
-			janeiro[countFixo].nome[i] = aaaaa[i];
-			fevereiro[countFixo].nome[i] = aaaaa[i];
-			marco[countFixo].nome[i] = aaaaa[i];
-			abril[countFixo].nome[i] = aaaaa[i];
-			maio[countFixo].nome[i] = aaaaa[i];
-			junho[countFixo].nome[i] = aaaaa[i];
-			julho[countFixo].nome[i] = aaaaa[i];
-			agosto[countFixo].nome[i] = aaaaa[i];
-			setembro[countFixo].nome[i] = aaaaa[i];
-			outubro[countFixo].nome[i] = aaaaa[i];
-			novembro[countFixo].nome[i] = aaaaa[i];
-			dezembro[countFixo].nome[i] = aaaaa[i];
-		}
-
-		janeiro[countFixo].count += 1;
-		fevereiro[countFixo].count += 1;
-		marco[countFixo].count += 1;
-		abril[countFixo].count += 1;
-		maio[countFixo].count += 1;
-		junho[countFixo].count += 1;
-		julho[countFixo].count += 1;
-		agosto[countFixo].count += 1;
-		setembro[countFixo].count += 1;
-		outubro[countFixo].count += 1;
-		novembro[countFixo].count += 1;
-		dezembro[countFixo].count += 1;
-		
-		countFixo++;
-		
-		printf("Deseja continuar? (s/n)\n");
-		gets(aaaaa);
-		
-		if (aaaaa[0] != 's'&& aaaaa[0] != 'S') {
-			cont = 0;
-		}
-	}
-
-	cont = 1;
+	int index = 0;
+	int indexE = 0;
+	int op;
 
 	while (cont) {
-		int op = menu1();
-		int mes = menu2();
-		
+		system("cls");
+		printf("====== Controle de Despesas ======\n");
+		printf("\n       ------- MENU -------\n\n");
+		printf(" [ 1 ] Nova Despesa \n");
+		printf(" [ 2 ] Nova Entrada \n");
+		printf(" [ 3 ] Listar Despesas \n");
+		printf(" [ 0 ] Sair \n");
+
+		printf("\n Informe uma Opcao: ");
+		scanf("%d", &op);
+		flush_in();
+
 		switch (op) {
 		case 1:
-			switch (mes) {
-			case 1:
-				addDespesa(&janeiro);
-				break;
-			case 2:
-				addDespesa(&fevereiro);
-				break;
-			case 3:
-				addDespesa(&marco);
-				break;
-			case 4:
-				addDespesa(&abril);
-				break;
-			case 5:
-				addDespesa(&maio);
-				break;
-			case 6:
-				addDespesa(&junho);
-				break;
-			case 7:
-				addDespesa(&julho);
-				break;
-			case 8:
-				addDespesa(&agosto);
-				break;
-			case 9:
-				addDespesa(&setembro);
-				break;
-			case 10:
-				addDespesa(&outubro);
-				break;
-			case 11:
-				addDespesa(&novembro);
-				break;
-			case 12:
-				addDespesa(&dezembro);
-				break;
-			}
+			newDespesa(&contas[index]);
+			index++;
 			break;
 		case 2:
-			switch (mes) {
-			case 1:
-				addSaldo(&saldo1);
-				break;
-			case 2:
-				addSaldo(&saldo2);
-				break;
-			case 3:
-				addSaldo(&saldo3);
-				break;
-			case 4:
-				addSaldo(&saldo4);
-				break;
-			case 5:
-				addSaldo(&saldo5);
-				break;
-			case 6:
-				addSaldo(&saldo6);
-				break;
-			case 7:
-				addSaldo(&saldo7);
-				break;
-			case 8:
-				addSaldo(&saldo8);
-				break;
-			case 9:
-				addSaldo(&saldo9);
-				break;
-			case 10:
-				addSaldo(&saldo10);
-				break;
-			case 11:
-				addSaldo(&saldo11);
-				break;
-			case 12:
-				addSaldo(&saldo12);
-				break;
-			}
+			newEntrada(&entrada[indexE]);
+			indexE++;
 			break;
 		case 3:
-			switch (mes) {
-			case 1:
-				visualizarMes(janeiro, saldo1);
-				break;
-			case 2:
-				visualizarMes(fevereiro, saldo2);
-				break;
-			case 3:
-				visualizarMes(marco, saldo3);
-				break;
-			case 4:
-				visualizarMes(abril, saldo4);
-				break;
-			case 5:
-				visualizarMes(maio, saldo5);
-				break;
-			case 6:
-				visualizarMes(junho, saldo6);
-				break;
-			case 7:
-				visualizarMes(julho, saldo7);
-				break;
-			case 8:
-				visualizarMes(agosto, saldo8);
-				break;
-			case 9:
-				visualizarMes(setembro, saldo9);
-				break;
-			case 10:
-				visualizarMes(outubro, saldo10);
-				break;
-			case 11:
-				visualizarMes(novembro, saldo11);
-				break;
-			case 12:
-				visualizarMes(dezembro, saldo12);
-				break;
-			}
+			listDespesa(contas, index, indexE, entrada);
 			break;
+		case 0:
+			cont = 0;
+			break;
+		}
+	}
 
+}
+
+int newDespesa(despesa* despesa) {
+	int op = 0;
+	int i;
+
+	system("cls");
+	printf("\n------ Nova Despesa ------");
+	printf("\nNome: ");
+	gets((*despesa).nome);
+	printf("Valor: ");
+	scanf("%f", &(*despesa).val);
+	flush_in();
+	printf("Despesa Fixa?\n [ 1 ] Sim\n [ 2 ] Nao\n\n>>");
+	scanf("%d", &op);
+
+	while (op != 1 && op != 2) {
+		printf("\nInforme uma opção valida\n\n>>");
+		scanf("%d", &op);
+	}
+
+	if (op == 1) {
+		(*despesa).tipo = 0;
+		for (i = 0; i < 12; i++) {
+			countMes[i] = 1;
+		}
+	}
+	else {
+		(*despesa).tipo = 1;
+		printf("Mes: ");
+		scanf("%d", &(*despesa).mes);
+		while ((*despesa).mes < 1 || op > 12) {
+			printf("\nInforme uma opção valida\n\n>>");
+			scanf("%d", &(*despesa).mes);
+		}
+
+		countMes[(*despesa).mes -1] = 1;
+	}
+}
+
+int newEntrada(entrada* entrada) {
+	system("cls");
+	printf("\n------ Nova Entrada ------");
+	printf("\nNome: ");
+	gets((*entrada).nome);
+	printf("Valor: ");
+	scanf("%f", &(*entrada).val);
+	flush_in();
+	printf("Mes: ");
+	scanf("%d", &(*entrada).mes);
+	flush_in();
+	countMes[(*entrada).mes -1] = 1;
+}
+
+int listDespesa(despesa despesas[], int index, int indexE, entrada entradas[]) {
+	int i = 0;
+	int j = 0;
+	for (j = 1; j <= 12; j++) {
+		float totD = 0;
+		float totE = 0;
+		system("cls");
+		if (countMes[j - 1] > 0) {
+			printf("%s:\n", meses(j));
+			printf("\n ---------- Listagem de Despesas ----------\n");
+
+			printf("\n| Cod |    Nome    |    Valor     | Tipo  |\n");
+			for (i = 0; i < index; i++) {
+				if (despesas[i].mes == j || despesas[i].mes == 0) {
+					printf("|  %.2d | %10s | R$%10.2f | %5s |\n", i, despesas[i].nome, despesas[i].val, (despesas[i].tipo == 0 ? "Fixo" : "Extra"));
+					totD += despesas[i].val;
+				}
+			}
+			//printf("\n Salário: R$%.2f\n Gasto: R$%.2f\n Saldo: R$%.2f\n\n", sal, tot, sal - tot);
+
+			printf("\n ---------- Listagem de Entradas ----------\n");
+
+			printf("\n|    Nome    |    Valor     |\n");
+			for (i = 0; i < indexE; i++) {
+				if (entradas[i].mes == j || entradas[i].mes == 0) {
+					printf("| %10s | R$%10.2f |\n", entradas[i].nome, entradas[i].val);
+					totE += entradas[i].val;
+				}
+			}
+
+			printf("\n ----------------- Total ------------------\n");
+
+			printf("\n|    Gasto    |    Ganho     |     Resto     |\n");
+			printf("| R$%10.2f | R$%10.2f | R$%10.2f |\n", totD, totE, (totE - totD));
+
+			system("pause");
 		}
 	}
 	
-}
-
-int menu1() {
-	int e;
-	printf("Deseja adicionar uma despesa, adicionar saldo ou visualizar um mes? (1-3)\n");
-	scanf("%d", &e);
-	return e;
-}
-
-int menu2() {
-	int e;
-	printf("Escolha um mes: (1-12)\n");
-	scanf("%d", &e);
-	return e;
-}
-
-int addDespesa(despesa *mes) {
-	char aaaaa[26];
-	float val;
-	int index = 0;
-	int cont = 1;
-	while (cont)
-	{
-		if (mes[index].count == 1) {
-			index++;
-		}
-		else {
-			cont = 0;
-		}
-	}
-	printf("Digite o nome da despesa:\n");
-	gets(aaaaa);
-	for (int i = 0; i < 26; i++) {
-		mes[index].nome[i] = aaaaa[i];
-	}
-	printf("Digite o valor da despesa:\n");
-	scanf("%f", &val);
-	mes[index].valor = val;
-}
-
-int addSaldo(float *saldo) {
-
-}
-
-int visualizarMes(despesa *mes, float *saldo) {
-
 }
