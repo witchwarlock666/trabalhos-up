@@ -20,7 +20,7 @@ public class Main {
     }
 
     public static void main(String args[]) {
-        List contatos = new ArrayList<Person>();
+        ArrayList<Person> contatos = new ArrayList<Person>();
         Scanner input = new Scanner(System.in);
         int op;
 
@@ -32,6 +32,7 @@ public class Main {
 
             switch (op) {
                 case 1:
+                    clear();
                     contatos.add(create());
                     id++;
                     break;
@@ -39,124 +40,65 @@ public class Main {
                     list(contatos);
                     break;
                 case 3:
-                    // edit();
+                    edit(contatos);
                     break;
                 case 4:
-                    // delete();
+                    delete(contatos);
                     break;
             }
         } while (op != 0);
     }
 
-    private static Person create() {
-        String rg = "";
-        String nm = "";
-        Date doB = new Date();
-        String email1 = "";
-        String email2 = "";
-        String res = "";
-        String com = "";
-        String cel = "";
-        Address resA = new Address();
-        Address comA = new Address();
-        HashMap<String, String> email = new HashMap<String, String>();
-        HashMap<String, String> phNo = new HashMap<String, String>();
-        HashMap<String, Address> addr = new HashMap<String, Address>();
-
-        Boolean cont = true;
-        Scanner input = new Scanner(System.in);
-
-        while (cont) {
-            try {
-                System.out.print("Nome: ");
-                nm = input.nextLine();
-
-                System.out.print("RG: ");
-                rg = input.nextLine();
-
-                System.out.print("Data de Nascimento: ");
-                doB = new SimpleDateFormat("dd/MM/yyyy").parse(input.nextLine());
-
-                System.out.print("Email Principal: ");
-                email1 = input.nextLine();
-
-                System.out.print("Email Secundario: ");
-                email2 = input.nextLine();
-
-                System.out.print("Telefone Residencial: ");
-                res = input.nextLine();
-
-                System.out.print("Telefone Comercial: ");
-                com = input.nextLine();
-
-                System.out.print("Telefone Celular: ");
-                cel = input.nextLine();
-
-                resA = newAddr();
-                comA = newAddr();
-                email.put("Email Principal", email1);
-                email.put("Email Secundario", email2);
-
-                phNo.put("Telefone Residencial", res);
-                phNo.put("Telefone Comercial", com);
-                phNo.put("Telefone Celular", cel);
-
-                addr.put("Endereco Residencial", resA);
-                addr.put("Endereco Comercial", comA);
-
-                cont = false;
-
-            } catch (Exception e) {
-            }
-        }
-
-        return new Person(id, nm, rg, doB, email, phNo, addr);
+    public static Person create() {
+        Person person = new Person();
+        person.setPerson(id);
+        return person;
     }
 
-    private static Address newAddr() {
-        String logradouro = "";
-        int num = 0;
-        String comp = "";
-        String district = "";
-        String cep = "";
-        String city = "";
-
-        Boolean cont = true;
-        Scanner input = new Scanner(System.in);
-
-        while (cont) {
-            try {
-                System.out.print("Logradouro: ");
-                logradouro = input.nextLine();
-
-                System.out.print("Numero: ");
-                num = input.nextInt();
-
-                input.nextLine();
-
-                System.out.print("Complemento: ");
-                comp = input.nextLine();
-
-                System.out.print("Bairro: ");
-                district = input.nextLine();
-
-                System.out.print("CEP: ");
-                cep = input.nextLine();
-
-                System.out.print("Cidade: ");
-                city = input.nextLine();
-
-                cont = false;
-
-            } catch (Exception e) {
+    public static void list(ArrayList contatos) {
+        Scanner in = new Scanner(System.in);
+        try {
+            for (int i = 0; i < contatos.size(); i++) {
+                clear();
+                String s = contatos.get(i).toString();
+                System.out.println(s);
+                in.nextLine();
             }
+        } catch (Exception e) {
+            System.out.println(e);
+            in.nextLine();
         }
-        return new Address(logradouro, num, comp, district, cep, city);
     }
 
-    private static void list(List person) {
-        Scanner cont = new Scanner(System.in);
-        person.forEach(item -> System.out.println(item));
-        cont.nextLine();
+    public static void edit(ArrayList contatos) {
+        Scanner in = new Scanner(System.in);
+        try {
+            System.out.print("Digite o id do contato: ");
+            int id = in.nextInt();
+            Person p = new Person();
+            p.setPerson(id);
+            contatos.set(id-1, p);
+        } catch (Exception e) {
+            System.out.println(e);
+            in.nextLine();
+        }
+    }
+
+    public static void delete(ArrayList<Person> contatos) {
+        Scanner in = new Scanner(System.in);
+        try {
+            System.out.print("Digite o id do contato: ");
+            int i = in.nextInt();
+            contatos.remove(i-1);
+            i++;
+            for (Person p : contatos) {
+                p.setId(i-1);
+                i++;
+            }
+            id--;
+        } catch (Exception e) {
+            System.out.println(e);
+            in.nextLine();
+        }
     }
 }
