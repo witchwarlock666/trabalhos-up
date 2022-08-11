@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenvolvimento Web Básico</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            padding: 5%;
+        }
+
+        .title {
+            color: rgb(59, 104, 186);
+        }
+
+        .main-title {
+            text-align: center;
+        }
+
+        .lamp-text {
+            color: crimson;
+            text-align: center;
+        }
+
+        .img {
+            display: block;
+            margin: 0 auto;
+            max-width: 75%;
+        }
+
+        p {
+            text-align: justify;
+            font-size: 1.35 rem;
+        }
+
+        footer {
+            background-color: rgb(59, 104, 186);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer p {
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <img src="topo.jpeg" alt="Imagem principal" class="img">
+
+    <h1 class="title main-title">5 formas de economizar energia elétrica dentro de casa</h1>
+
+    <p>É o seu caso? Então confira nossas dicas a seguir!</p>
+
+    <h2 class="title">Formas de economizar energia elétrica em seu dia a dia</h2>
+
+    <h3 class="title">1. Valorize a iluminação natural</h3>
+
+    <p>Entre as formas de economizar energia elétrica, a valorização da iluminação natural é uma das mais práticas e
+        benéficas. Por meio dessa iniciativa, é possível otimizar a capacidade de iluminação dos ambientes, reduzindo a
+        necessidade de ligar luzes artificiais e, ainda, ter mais conforto visual e bem-estar ao aumentar o contato com
+        a luz solar.
+
+    <p>Para isso, evite o bloqueio da luz natural feito por mobiliários mais robustos como estantes e roupeiros. Também
+        é recomendado pintar as paredes com cores claras, que ajudam a refletir melhor a iluminação do sol.</p>
+
+    <p>Ainda, apostar no uso de espelhos nas paredes, e até mesmo em móveis espelhados, é uma estratégia inteligente,
+        pois eles, além de gerarem uma sensação de amplitude, ajudam a iluminar os cômodos, refletindo luz. </p>
+
+    <h3 class="title">2. Troque suas lâmpadas</h3>
+
+    <p>Na hora de pensar em formas de economizar energia elétrica é preciso levar em conta a troca das lâmpadas de sua
+        residência. Isso porque esse tipo de iluminação é responsável por cerca de 20% do consumo total de energia de
+        uma casa. Por isso, é importante optar pelos modelos que demandem menor consumo.</p>
+
+    <p>As lâmpadas incandescentes estão entre os modelos que devem ser trocados, visto serem os que mais consomem
+        energia. Já as lâmpadas de LED tem melhor custo x benefício, já que são 80% mais econômicas do que as
+        incandescente e 30% mais econômicas do que as fluorescentes.</p>
+
+    <h3 class="title">3. Tire os aparelhos eletrônicos da tomada</h3>
+
+    <p>Há algumas pessoas que pensam que é mito, mas o fato é que tirar os aparelhos eletrônicos da tomada pode
+        realmente reduzir o consumo de energia elétrica. Entre os equipamentos que mais geram esse tipo de custo estão
+        televisores e fornos microondas.</p>
+
+    <p>Se você tem dúvidas sobre a efetividade dessa ação, saiba que, não é novidade que aparelhos ligados consomem
+        demais. Faça um teste. Sabia que somente um decodificador de TV a cabo que é utilizado por poucas horas no dia,
+        mas fica o restante do tempo na tomada, pode gerar um custo adicional de quase cem reais anualmente?</p>
+
+    <h3 class="title">4. Tenha atenção ao estado dos eletrodomésticos</h3>
+
+    <p>Manter seus eletrodomésticos em boas condições é fundamental para não gerar desperdício de energia elétrica. Por
+        isso, é importante adotar práticas como verificar se a borracha da geladeira apresenta boa vedação e limpar
+        regularmente filtros de máquinas de lavar e condicionares de ar.</p>
+
+    <h3 class="title">5. Diminua o uso de aparelhos como ferro elétrico, chuveiro e máquina de lavar</h3>
+
+    <p>Na composição de uma conta de luz, o uso de máquina de lavar e do chuveiro estão entre os campeões em elevar
+        custos.</p>
+
+    <p>Para reduzir seu consumo, dê preferência a passar mais roupas por vez do que passar uma peça a cada ligada do
+        ferro. Ao utilizar o chuveiro, sempre que possível, utilize a função Verão e tente diminuir o tempo de seus
+        banhos. Para o caso da máquina de lavar, também busque juntar diversas peças para utilizar capacidade total do
+        equipamento, ao invés de lavar poucas peças por vez.</p>
+
+    <p>Com pequenas atitudes, é possível alcançar grandes resultados! Essas são formas simples de economizar energia,
+        reduzir sua conta de luz e, ainda, de ter atitudes mais sustentáveis em seu dia a dia.</p>
+
+    <h3 class="lamp-text">Se não econonomizarmos, por faltar energia!</h3>
+
+    <img src="lampada_desligada.jpeg" alt="Lâmpada" class="img" id="lamp" onmouseover="turnOnOff(this, true)"
+        onmouseout="turnOnOff(this, false)" onclick="breakLamp(this)">
+
+    <p style="text-align: center;">Total de acendimentos: <span id="num">0</span></p>
+
+    <p>Fonte: <a href="https://www.rioverde.com.br/empreendimentos-imobiliarios/formas-de-economizar-energia/">Rio Verde
+            Empreendimentos</a></p>
+
+    <footer>
+        <p>Desenvolvimento Web Básico - Avaliação 2º bimestre</p>
+    </footer>
+
+    <script>
+        const turnOnOff = (lamp, on) => {
+            let oldSrc = lamp.src;
+            const num = document.getElementById("num");
+            let val = num.innerHTML;
+            oldSrc = oldSrc.split('/');
+            oldSrc = oldSrc[oldSrc.length - 1]
+            if (oldSrc != "lampada_quebrada.jpeg") {
+                if (on) {
+                    lamp.src = "lampada_ligada.jpeg";
+                    val = parseInt(val);
+                    val = ++val;
+                    num.innerHTML = val
+                }
+                else {
+                    lamp.src = "lampada_desligada.jpeg";
+                }
+            }
+
+        };
+
+        const breakLamp = lamp => {
+            lamp.src = "lampada_quebrada.jpeg";
+        };
+    </script>
+
+</body>
+
+</html>

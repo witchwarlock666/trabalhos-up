@@ -1,3 +1,5 @@
+//Fabricio Bertoncello Filho e João Lucas de Oliveira Vieira
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,7 +57,8 @@ public class Main {
         return person;
     }
 
-    public static void list(ArrayList contatos) {
+    public static void list(ArrayList list) {
+        ArrayList contatos = sort(list);
         Scanner in = new Scanner(System.in);
         try {
             for (int i = 0; i < contatos.size(); i++) {
@@ -100,5 +103,21 @@ public class Main {
             System.out.println(e);
             in.nextLine();
         }
+    }
+
+    public static ArrayList<Person> sort(ArrayList<Person> contatos) {
+        Person temp;
+        for (int i = 0; i < contatos.size(); i++) {
+            for (int j = i + 1; j < contatos.size(); j++) {
+                if (contatos.get(i).getNm().compareTo(contatos.get(j).getNm()) > 0) {
+                    // swapping
+                    temp = contatos.get(i);
+                    contatos.set(i, contatos.get(j));
+                    contatos.set(j, temp);
+                }
+            }
+        }
+
+        return contatos;
     }
 }
