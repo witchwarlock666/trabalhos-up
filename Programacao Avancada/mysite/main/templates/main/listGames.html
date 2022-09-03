@@ -8,12 +8,13 @@
 
 <h1>Game List</h1>
 
-<ul>
     {% for item in games %}
+        <div class="gamelistitem">
 
-        <li>{{item.gameid}}</li>
+            {{item.gameid}}
+
+        </div>
 
     {% endfor %}
-</ul>
 
 {% endblock content %}

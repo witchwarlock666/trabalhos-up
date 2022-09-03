@@ -34,7 +34,7 @@ def newGame(res):
         if form.is_valid():
             cl = form.cleaned_data["appid"]
             createGame(cl)
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect(f"/game/{cl}")
     else:
         form = addGame()
     return render(res, "main/newGame.html", {"form": form})
