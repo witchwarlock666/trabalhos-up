@@ -1,0 +1,20 @@
+{% extends 'main/_layout.html' %}
+
+{% block title %}Index{% endblock title %}
+
+{% block content %}
+
+<h1>Index</h1>
+<form action="/" method="post">
+
+    {% csrf_token %}
+    {{ form }}
+
+    <input type="submit">
+
+</form>
+{{message}}
+<br>
+<a href="/listGames">Game List</a>
+
+{% endblock content %}

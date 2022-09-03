@@ -1,0 +1,17 @@
+{% extends 'main/_layout.html' %}
+
+{% block title %}New Game{% endblock title %}
+
+{% block content %}
+
+<h1>New game</h1>
+
+<form action="/newGame/" method="post">
+
+    {% csrf_token %}
+    {{ form }}
+
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock content %}

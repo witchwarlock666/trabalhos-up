@@ -1,0 +1,19 @@
+{% extends 'main/_layout.html' %}
+
+{% block title %}Game List{% endblock title %}
+
+{% block content %}
+
+<a href="/">Home</a>
+
+<h1>Game List</h1>
+
+<ul>
+    {% for item in games %}
+
+        <li>{{item.gameid}}</li>
+
+    {% endfor %}
+</ul>
+
+{% endblock content %}

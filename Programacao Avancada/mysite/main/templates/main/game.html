@@ -1,0 +1,31 @@
+{% extends 'main/_layout.html' %}
+
+{% block title %}Game {{game.gameid}}{% endblock title %}
+
+{% block content %}
+
+<a href="/">Home</a>
+
+<h1>Game {{game.gameid}}</h1>
+
+<ul>
+    <li>{{game.gameid}}</li>
+    <li>{{game.name}}</li>
+
+    {% for item in developers %}
+
+        <li>{{item}}</li>
+
+    {% endfor %}
+
+    {% for item in publishers %}
+
+        <li>{{item}}</li>
+
+    {% endfor %}
+
+    <li>{{game.price}}</li>
+    <li>{{game.release}}</li>
+</ul>
+
+{% endblock content %}
