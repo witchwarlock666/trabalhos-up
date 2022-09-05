@@ -17,21 +17,20 @@ if cont:
         url = "https://store.steampowered.com/api/appdetails?appids=" + gameid + "&cc=br"
         response = requests.get(url)
         response = response.json()
-        # data = response[gameid]["data"]
+        data = response[gameid]["data"]
 
-        # newdict = {
-        #     gameid: {
-        #         "id": str(data["steam_appid"]),
-        #         "name": data["name"],
-        #         "developers": data["developers"],
-        #         "publishers": data["publishers"],
-        #         "price": data["price_overview"]["final_formatted"],
-        #         "release": data["release_date"]["date"]
-        #     }
-        # }
+        newdict = {
+            gameid: {
+                "id": str(data["steam_appid"]),
+                "name": data["name"],
+                "developers": data["developers"],
+                "publishers": data["publishers"],
+                "price": data["price_overview"]["final_formatted"],
+                "release": data["release_date"]["date"]
+            }
+        }
 
-        # object = json.dumps(newdict, indent=4)
-        object = json.dumps(response, indent=4)
+        object = json.dumps(newdict, indent=4)
 
         with open("steam.json", "a") as f:
             f.write(object)

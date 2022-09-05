@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .steam import createGame
+from .steam import createGame, updateGame
 from .forms import addGame, searchGame
 from .models import Game
 
@@ -11,17 +11,16 @@ def index(res):
     message = ""
     if res.method == "POST":
         form = searchGame(res.POST)
-        
-        if form.is_valid():
-            cl = form.cleaned_data["appid"]
-            try:
-                game = Game.objects.get(gameid=cl)
-                return HttpResponseRedirect(f"/game/{cl}")
-            except:
-                message = "Game does not exist!"
-                return render(res, "main/index.html", {"form": form, "message": message})
+        print(form)
+        cl = form.cleaned_data["appid"]
+        try:
+            game = Game.objects.get(gameid=cl)
+            return HttpResponseRedirect(f"/game/{cl}")
+        except:
+            message = "Game does not exist!"
+            return render(res, "main/index.html", {"form": form, "message": message})
     else:
-        form = addGame()
+        form = searchGame()
     return render(res, "main/index.html", {"form": form, "message": message})
 
 def b(res):
@@ -50,3 +49,18 @@ def game(res, gameid):
     developers = game.developers.split(";")
     
     return render(res, "main/game.html", {"game": game, "publishers": publishers, "developers": developers})
+
+def updateGames(res, gameid):
+    gameid = str(gameid)
+    updateGame(gameid)
+    game = Game.objects.get(gameid=gameid)
+    
+    publishers = game.publishers.split(";")
+    developers = game.developers.split(";")
+    return HttpResponseRedirect(f"/game/{gameid}")
+
+def deleteGame(res, gameid):
+    gameid = str(gameid)
+    game = Game.objects.get(gameid=gameid)
+    game.delete()
+    return HttpResponseRedirect("/")

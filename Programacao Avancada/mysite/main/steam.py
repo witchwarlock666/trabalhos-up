@@ -1,4 +1,3 @@
-from tkinter import E
 import requests, json
 from .models import Game
 
@@ -29,7 +28,8 @@ def createGame(id):
                     "developers": data["developers"],
                     "publishers": data["publishers"],
                     "price": data["price_overview"]["final_formatted"],
-                    "release": data["release_date"]["date"]
+                    "release": data["release_date"]["date"],
+                    # "background": data["background_raw"]
                 }
             }
             print("3")
@@ -52,3 +52,37 @@ def createGame(id):
             #     f.write(object)
         except Exception as e:
             print(e)
+            
+def updateGame(id):
+    oldGame = Game.objects.get(gameid=id)
+    url = "https://store.steampowered.com/api/appdetails?appids=" + id + "&cc=br"
+    response = requests.get(url)
+    response = response.json()
+    data = response[id]["data"]
+    newdict = {
+        id: {
+            "id": str(data["steam_appid"]),
+            "name": data["name"],
+            "developers": data["developers"],
+            "publishers": data["publishers"],
+            "price": data["price_overview"]["final_formatted"],
+            "release": data["release_date"]["date"],
+            "background": data["background_raw"]
+        }
+    }
+    
+    gm = newdict[id]
+            
+    dev = ";".join(gm["developers"])
+    pub = ";".join(gm["publishers"])
+    
+    newGame = Game(gameid=id, name=gm["name"], developers=dev, publishers=pub, price=gm["price"], release=gm["release"], background=gm["background"])
+    
+    oldGame.name = newGame.name
+    oldGame.developers = newGame.developers
+    oldGame.publishers = newGame.publishers
+    oldGame.price = newGame.price
+    oldGame.release = newGame.release
+    oldGame.background = newGame.background
+    
+    oldGame.save()

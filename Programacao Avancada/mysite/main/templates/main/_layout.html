@@ -1,13 +1,30 @@
+{%  load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
     <title>{% block title %}Layout page{% endblock title %}</title>
 </head>
-<body>
-    <div>
+<body {% block body %}style="background-image: url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/3e9d67ac-08f4-4b70-b67a-2089c363385a/d9gsvdb-9281c06a-9de0-4b9b-9ec0-6d10aadae12e.png/v1/fill/w_1192,h_670,q_70,strp/steam_wallpaper_by_alyama123_d9gsvdb-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTQ0MCIsInBhdGgiOiJcL2ZcLzNlOWQ2N2FjLTA4ZjQtNGI3MC1iNjdhLTIwODljMzYzMzg1YVwvZDlnc3ZkYi05MjgxYzA2YS05ZGUwLTRiOWItOWVjMC02ZDEwYWFkYWUxMmUucG5nIiwid2lkdGgiOiI8PTI1NjAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.i1n53_K6L6n3X8vaqekaiZjxuE2yui5o5u_AECLtPbc)"{% endblock body %}>
+    <div class="navbar">
+        <a class="active" href="/listGames"><i class="mdi mdi-home"></i> Home</a>   
+        <a href="/newGame"><i class="mdi mdi-microsoft-xbox-controller"></i> New Game</a>
+        <a href="https://store.steampowered.com"
+            target="_blank"><i class="mdi mdi-steam"></i> Steam</a>
+        <form action="/" method="post">
+
+            {% csrf_token %}
+            <input type="text" name="appid" maxlength="15" placeholder="Search" id="id_appid">
+        
+            <input type="submit" style="display: none;">
+        
+        </form>
+    </div>
+    <div class="main-content">
         {% block content %}
         {% endblock content %}
     </div>

@@ -2,33 +2,40 @@
 
 {% block title %}{{game.name}}{% endblock title %}
 
+{% block body %}style="background-image: url({{game.background}});"{% endblock body %}
+
 {% block content %}
 
-<a href="/">Home</a>
+<main>
+    <div class="main-div">
+        <h1 style="text-align: center">{{game.name}}</h1>
 
-<h1>{{game.name}}</h1>
+        Appid: {{game.gameid}}<br><br>
 
-Appid: {{game.gameid}}<br><br>
+        Developers:
+        <ul>
+            {% for item in developers %}
 
-Developers:
-<ul>
-    {% for item in developers %}
+                <li>{{item}}</li>
 
-        <li>{{item}}</li>
+            {% endfor %}
+        </ul>
 
-    {% endfor %}
-</ul>
+        Publishers:
+        <ul>
+            {% for item in publishers %}
 
-Publishers:
-<ul>
-    {% for item in publishers %}
+                <li>{{item}}</li>
 
-        <li>{{item}}</li>
+            {% endfor %}
+        </ul>
 
-    {% endfor %}
-</ul>
+        Preço: {{game.price}}<br><br>
+        Data de Lançamento: {{game.release}}<br><br>
 
-Preço: {{game.price}}<br><br>
-Data de Lançamento: {{game.release}}
+        <a href="/deleteGame/{{game.gameid}}" class="btn red">Delete</a>
+        <a href="/updateGames/{{game.gameid}}" class="btn blue">Update</a>
+    </div>
+</main>
 
 {% endblock content %}
