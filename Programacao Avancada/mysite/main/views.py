@@ -7,21 +7,21 @@ from .models import Game
 
 # Create your views here.
 
-def index(res):
-    message = ""
-    if res.method == "POST":
-        form = searchGame(res.POST)
-        print(form)
-        cl = form.cleaned_data["appid"]
-        try:
-            game = Game.objects.get(gameid=cl)
-            return HttpResponseRedirect(f"/game/{cl}")
-        except:
-            message = "Game does not exist!"
-            return render(res, "main/index.html", {"form": form, "message": message})
-    else:
-        form = searchGame()
-    return render(res, "main/index.html", {"form": form, "message": message})
+# def index(res):
+#     message = ""
+#     if res.method == "POST":
+#         form = searchGame(res.POST)
+#         print(form)
+#         cl = form.cleaned_data["appid"]
+#         try:
+#             game = Game.objects.get(gameid=cl)
+#             return HttpResponseRedirect(f"/game/{cl}")
+#         except:
+#             message = "Game does not exist!"
+#             return render(res, "main/index.html", {"form": form, "message": message})
+#     else:
+#         form = searchGame()
+#     return render(res, "main/index.html", {"form": form, "message": message})
 
 def b(res):
     return render(res, "main/_layout.html", {})
@@ -64,3 +64,40 @@ def deleteGame(res, gameid):
     game = Game.objects.get(gameid=gameid)
     game.delete()
     return HttpResponseRedirect("/")
+
+def searchGames(query):
+    gameList = []
+    games = Game.objects.all()
+    
+    for game in games:
+        developers = game.developers.split(";")
+        publishers = game.publishers.split(";")
+        year = game.release.split(" ")[-1]
+        cont = True
+        if cont:
+            if query in game.gameid or query.upper() in game.name.upper() or query in game.price or query in game.release or query in year:
+                gameList.append(game)
+                cont = False
+            
+        if cont:
+            for dev in developers:
+                if query.upper() in dev.upper():
+                    gameList.append(game)
+                    cont = False
+        if cont:
+            for pub in publishers:
+                if query.upper() in pub.upper():
+                    gameList.append(game)
+    
+    return gameList
+            
+def search(res):
+    if res.method == "POST":
+        form = searchGame(res.POST)
+        print(form)
+        query = form.cleaned_data["query"]
+        gameList = searchGames(query)
+    else:
+        return HttpResponseRedirect("/")
+    
+    return render(res, "main/search.html", {"gameList": gameList})

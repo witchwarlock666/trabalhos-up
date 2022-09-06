@@ -1,3 +1,4 @@
+from pprint import pprint
 import requests, json
 
 idteste = "489830"
@@ -31,8 +32,10 @@ if cont:
         }
 
         object = json.dumps(newdict, indent=4)
+        
+        pprint(response)
 
-        with open("steam.json", "a") as f:
-            f.write(object)
+        # with open("steam.json", "a") as f:
+        #     f.write(object)
     except Exception as e:
         print(e)

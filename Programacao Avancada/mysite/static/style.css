@@ -31,11 +31,6 @@ label {
     overflow: auto;
 }
 
-.navbar #id_appid {
-  float: right;
-  margin: 10px 8px 0 0;
-}
-
 .navbar a {
   float: left;
   padding: 12px;

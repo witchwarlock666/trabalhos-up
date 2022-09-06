@@ -15,10 +15,10 @@
         <a href="/newGame"><i class="mdi mdi-microsoft-xbox-controller"></i> New Game</a>
         <a href="https://store.steampowered.com"
             target="_blank"><i class="mdi mdi-steam"></i> Steam</a>
-        <form action="/" method="post">
+        <form action="/search/" method="post">
 
             {% csrf_token %}
-            <input type="text" name="appid" maxlength="15" placeholder="Search" id="id_appid">
+            <input type="text" name="query" maxlength="100" placeholder="Search" id="id_query" style="float: right; margin: 10px 8px 0 0;">
         
             <input type="submit" style="display: none;">
         
