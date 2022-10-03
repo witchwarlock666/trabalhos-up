@@ -1,0 +1,27 @@
+{
+    "454650": {
+        "id": "454650",
+        "name": "DRAGON BALL XENOVERSE 2",
+        "developers": [
+            "QLOC",
+            "DIMPS"
+        ],
+        "publishers": [
+            "BANDAI NAMCO Entertainment"
+        ],
+        "price": "R$ 23,98",
+        "release": "27 Oct, 2016"
+    },
+    "489830": {
+        "id": "489830",
+        "name": "The Elder Scrolls V: Skyrim Special Edition",
+        "developers": [
+            "Bethesda Game Studios"
+        ],
+        "publishers": [
+            "Bethesda Softworks"
+        ],
+        "price": "R$ 149,00",
+        "release": "27 Oct, 2016"
+    }
+}
