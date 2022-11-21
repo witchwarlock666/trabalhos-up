@@ -12,16 +12,16 @@
         "price": "R$ 23,98",
         "release": "27 Oct, 2016"
     },
-    "489830": {
-        "id": "489830",
-        "name": "The Elder Scrolls V: Skyrim Special Edition",
+    "108600": {
+        "id": "108600",
+        "name": "Project Zomboid",
         "developers": [
-            "Bethesda Game Studios"
+            "The Indie Stone"
         ],
         "publishers": [
-            "Bethesda Softworks"
+            "The Indie Stone"
         ],
-        "price": "R$ 149,00",
-        "release": "27 Oct, 2016"
+        "price": "R$ 37,99",
+        "release": "8 Nov, 2013"
     }
 }
