@@ -94,11 +94,15 @@ class Create:
         developer = self.developer.get()
         publisher = self.publisher.get()
         release = self.release.get_date().strftime('%Y-%m-%d')
-        Game.newGame(self.db, title, developer, publisher, release, self.usuario)
         
-        Log.createLog(self.db, "User " + self.usuario.usuario + " Added Game " + title)
+        game = Game.getGame(self.db, title, self.usuario)
         
-        self.back()
+        if game is None:
+            Game.newGame(self.db, title, developer, publisher, release, self.usuario)
+            
+            Log.createLog(self.db, "User " + self.usuario.usuario + " Added Game " + title)
+            
+            self.back()
     
     def clearWindow(self):
         for widgets in self.body.winfo_children():

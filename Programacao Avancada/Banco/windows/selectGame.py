@@ -55,11 +55,14 @@ class Select:
     def confirm(self):
         title = self.title.get()
         game = Game.getGame(self.db, title, self.usuario)
-        self.clearWindow()
         
-        Log.createLog(self.db, "User " + self.usuario.usuario + " Searched for Game " + title)
+        try:
+            Log.createLog(self.db, "User " + self.usuario.usuario + " Searched for Game " + title)
+            self.clearWindow()
+            Present(self.usuario, self.db, game, self.master)
+        except:
+            pass
         
-        Present(self.usuario, self.db, game, self.master)
     
     def clearWindow(self):
         for widgets in self.body.winfo_children():

@@ -3,6 +3,7 @@ from windows.createGame import Create
 from windows.selectGame import Select
 from windows.deleteGame import Delete
 from windows.updateGame import Update
+from windows.listGames import SelectList
 from games import Game
 from matplotlib import pyplot
 
@@ -23,8 +24,15 @@ class Menu:
         self.menuContainer["padx"] = 20
         self.menuContainer.pack()
 
+        self.list = tk.Button(self.menuContainer)
+        self.list["text"] = "Lista"
+        self.list["font"] = ("Calibri", "8")
+        self.list["width"] = 12
+        self.list["command"] = self.listGames
+        self.list.pack()
+
         self.select = tk.Button(self.menuContainer)
-        self.select["text"] = "Lista"
+        self.select["text"] = "Buscar"
         self.select["font"] = ("Calibri", "8")
         self.select["width"] = 12
         self.select["command"] = self.selectGame
@@ -58,14 +66,19 @@ class Menu:
         self.grafico["command"] = self.graph
         self.grafico.pack()
         
+    def listGames(self):
+        self.clearWindow()
+        self.master.title("List")
+        SelectList(self.usuario, self.db, self.master)
+        
     def selectGame(self):
         self.clearWindow()
-        self.master.title("Create")
+        self.master.title("Select")
         Select(self.usuario, self.db, self.master)
     
     def createGame(self):
         self.clearWindow()
-        self.master.title("Select")
+        self.master.title("Create")
         Create(self.usuario, self.db, self.master)
     
     def deleteGame(self):

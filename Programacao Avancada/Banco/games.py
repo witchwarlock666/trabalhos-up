@@ -20,8 +20,13 @@ class Game:
         values = (gameTitle, user.id)
         conn.execute(sql, values)
         
-        for (gameId, title, developer, publisher, release, userId) in conn:
-            return Game(title, developer, publisher,  release.strftime("%Y-%m-%d"))
+        arr = []
+        try:
+            for (gameId, title, developer, publisher, release, userId) in conn:
+                arr.append(Game(title, developer, publisher,  release.strftime("%Y-%m-%d")))
+            return arr[0]
+        except:
+            return None
         
     def deleteGame(db, title, user):
         conn = db.connection.cursor()
@@ -58,3 +63,16 @@ class Game:
             logins.append(login)
             nums.append(n)
         return logins, nums
+    
+    def getGameList(db, user):
+        conn = db.connection.cursor()
+        sql = "select gameId, title from games where userId = %s"
+        values = (user.id,)
+        conn.execute(sql, values)
+        
+        arr = []
+        
+        for (gameId, title) in conn:
+            arr.append((gameId, title))
+            
+        return arr
