@@ -134,7 +134,7 @@ def validar(pay, get, value, amount, key):
                     conn.execute("update users set blocked = 0 where id_user = ?", (pay,))
                     db.commit()
                 else:
-                    conn.execute("insert into transactions (id_pay, id_get, value, amount, approved, time) values (?, ?, ?, ?, ?, ?)", (pay, get, value, amount, 1, t))
+                    conn.execute("insert into transactions (id_pay, id_get, value, amount, approved, time) values (?, ?, ?, ?, ?, ?)", (pay, get, value, amount, 0, t))
                     db.commit()
                     return jsonify({"status": 2, "key": key})
         else:
