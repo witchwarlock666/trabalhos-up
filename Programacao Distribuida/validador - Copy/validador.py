@@ -6,7 +6,7 @@ import socket
 
 app = Flask(__name__)
 
-PORT = 5000
+PORT = 5001
 
 def getTime():
     db = sqlite3.connect("validador.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)

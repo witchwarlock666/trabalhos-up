@@ -54,7 +54,7 @@ class Transacao(db.Model):
     status = db.Column(db.Integer, unique=False, nullable=False)
     
     def getDict(self):
-        return {"id": self.id, "remetente": self.remetente, "recebedor": self.recebedor, "valor": self.valor, "status": self.status}
+        return {"id": self.id, "remetente": self.remetente, "recebedor": self.recebedor, "valor": self.valor, "horario": self.horario, "status": self.status}
 
 @app.before_first_request
 def create_tables():
@@ -229,7 +229,7 @@ def UmaTransacao(id):
     if(request.method == 'GET'):
         objeto = Transacao.query.get(id)
         o = objeto.getDict()
-        return jsonify(objeto)
+        return jsonify(o)
     else:
         return jsonify(['Method Not Allowed'])
 
