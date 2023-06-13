@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 import requests
 from hashlib import sha1
 from random import choices
+from numpy.random import choice
+from numpy import array
 
 app = Flask(__name__)
 
@@ -41,8 +43,10 @@ def chooseValidador():
                 ).fetchall()
                 sum = sum[0]
                 
-                saldos = list(map(lambda s: max(5, min(s/sum[0], 40)), amounts))
-                val = choices(population=ips, weights=saldos, k=3)
+                saldos = list(map(lambda s: max(5.0, min((s/sum[0]) * 100, 40.0)), amounts))
+                saldos = array(saldos)
+                saldos /= saldos.sum()
+                val = choice(ips, 3, False, saldos)
                 return val
         return list
     except Exception as e:
