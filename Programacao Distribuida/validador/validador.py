@@ -74,7 +74,7 @@ def cadastrar(amount):
     db = sqlite3.connect("validador.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     conn = db.cursor()
     
-    hostname = socket.gethostname()
+    # hostname = socket.gethostname()
     # ip = socket.gethostbyname(hostname)
     ip = "127.0.0.1"
     ip = ip + ":" + str(PORT)

@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dataclasses import dataclass
 from datetime import date, datetime
+import requests
   
 app = Flask(__name__)
 
@@ -37,7 +38,7 @@ class Seletor(db.Model):
     ip = db.Column(db.String(15), unique=False, nullable=False)
     
     def getDict(self):
-        return {"id": self.id, "nome": self.nome, "senha": self.ip}
+        return {"id": self.id, "nome": self.nome, "ip": self.ip}
     
 class Transacao(db.Model):
     id: int
@@ -146,7 +147,7 @@ def InserirSeletor(nome, ip):
         db.session.add(objeto)
         db.session.commit()
         o = objeto.getDict()
-        return jsonify(objeto)
+        return jsonify(o)
     else:
         return jsonify(['Method Not Allowed'])
 
@@ -155,7 +156,7 @@ def UmSeletor(id):
     if(request.method == 'GET'):
         produto = Seletor.query.get(id)
         o = produto.getDict()
-        return jsonify(produto)
+        return jsonify(o)
     else:
         return jsonify(['Method Not Allowed'])
 
@@ -220,7 +221,12 @@ def CriaTransacao(rem, reb, valor):
         db.session.add(objeto)
         db.session.commit()
         o = objeto.getDict()
-        return jsonify(o)
+        id = o["id"]
+        seletor = requests.get("http://127.0.0.1:1234/seletor/1").json()
+        url = "http://" + seletor["ip"] + "/validador/" + str(id)
+        status = requests.get(url).json()["status"]
+        res = requests.post(f"http://127.0.0.1:1234/transactions/{id}/{status}").json()
+        return jsonify(res)
     else:
         return jsonify(['Method Not Allowed'])
 
@@ -243,6 +249,7 @@ def EditaTransacao(id, status):
             objeto.status = status
             db.session.commit()
             o = objeto.getDict()
+            print(o)
             return jsonify(o)
         except Exception as e:
             data={

@@ -6,6 +6,7 @@ from hashlib import sha1
 from random import choices
 from numpy.random import choice
 from numpy import array
+from math import ceil
 
 app = Flask(__name__)
 
@@ -13,7 +14,7 @@ def getTime():
     db = sqlite3.connect("seletor.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     conn = db.cursor()
     
-    url = conn.execute("select url from url where id = ?", (1,)).fetchone()
+    url = conn.execute("select url from url where id = 1").fetchone()
     url = url[0] + "/hora"
     r = requests.get(url = url)
     time = r.json()
@@ -31,27 +32,40 @@ def chooseValidador():
         t2 = datetime.strptime(getTime(), "%a, %d %b %Y %H:%M:%S %Z")
         
         while t2 < t:
-        
-            res = conn.execute(
+            print(t - t2)
+            select = conn.execute(
                 "select ip, amount from validador where active = 1 and blocked = 0"
             ).fetchall()
             
-            if len(res) > 2:
-                ips, amounts = zip(*res)
-                sum = conn.execute(
-                    "select sum(amount) from validador where active = 1 and blocked = 0"
-                ).fetchall()
-                sum = sum[0]
+            if len(select) > 2:
+                ips, amounts = zip(*select)
+                sum = conn.execute("select sum(amount) from validador where active = 1 and blocked = 0").fetchall()
+                sum = sum[0][0]
                 
-                saldos = list(map(lambda s: max(5.0, min((s/sum[0]) * 100, 40.0)), amounts))
+                saldos = list(map(lambda s: max(5.0, min((s/sum) * 100, 40.0)), amounts))
                 saldos = array(saldos)
                 saldos /= saldos.sum()
                 val = choice(ips, 3, False, saldos)
+                val = list(val)
                 return val
-        return list
+            t2 = datetime.strptime(getTime(), "%a, %d %b %Y %H:%M:%S %Z")
+        return list()
     except Exception as e:
         print(e)
-        return list
+        return list()
+    
+def getValue(id):
+    db = sqlite3.connect("seletor.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+    conn = db.cursor()
+    
+    url = conn.execute("select url from url where id = ?", (1,)).fetchone()
+    url = url[0] + "/transacoes/" + str(id)
+    
+    r = requests.get(url = url)
+    r = r.json()
+    value = r["valor"]
+    conn.close()
+    return value
 
 def validation(ip, id):
     try:
@@ -62,15 +76,11 @@ def validation(ip, id):
         res = requests.get(url=url)
         res = res.json()
         
-        print(res)
-        
         select = conn.execute("select key from validador where ip = ?", (ip,)).fetchone()
         
         if res["chave"] == select[0]:
-            print("ccc")
             return res["status"]
         else:
-            print("bbb")
             return 0
             
     except Exception as e:
@@ -150,11 +160,10 @@ def validate(id):
     conn = db.cursor()
     
     val: list = chooseValidador()
-    if not len(val):
+    if not val:
         return jsonify({"status": 0, "aaa": "aaa"})
     
     for v in val:
-        print(v)
         conn.execute("update validador set active = 0 where ip = ?", (v,))
         db.commit()
     
@@ -182,11 +191,29 @@ def validate(id):
         else:
             b += 1
     if a == 3 or b == 3:
+        for v in val:
+            select = conn.execute("select flags, flag_count, total_validations, amount from validador where ip = ? ", (val[i],)).fetchone()
+            value = getValue(id)
+            value = ceil(value/20)
+            amount = select[3] + value
+            print(amount)
+            flags = select[0]
+            if flags > 0:
+                fc = select[1] + 1
+                if select[1] == 10000:
+                    flags = flags - 1
+                    fc = 0
+                conn.execute("update validador set flag_count = ?, flags = ? where ip = ?", (fc, flags, val[i]))
+                db.commit()
+            conn.execute("update validador set active = 1, amount = ? where ip = ?", (amount, v))
+            db.commit()
         return jsonify({"status": r[0]})
-    
     elif a == 2:
         for i in range(3):
-            select = conn.execute("select flags, flag_count, total_validations from validador where ip = ? ", (val[i],)).fetchone()
+            select = conn.execute("select flags, flag_count, total_validations, amount from validador where ip = ? ", (val[i],)).fetchone()
+            value = getValue(id)
+            value = ceil(value/20)
+            amount = select[3]
             if r[i] == 2:
                 flags = select[0] + 1
                 blocked = 0
@@ -195,6 +222,7 @@ def validate(id):
                 conn.execute("update validador set flag_count = 0, flags = ?, blocked = ? where ip = ?", (flags, blocked, val[i]))
                 db.commit()
             else:
+                amount = select[3] + value
                 flags = select[0]
                 if flags > 0:
                     fc = select[1] + 1
@@ -203,13 +231,15 @@ def validate(id):
                         fc = 0
                     conn.execute("update validador set flag_count = ?, flags = ? where ip = ?", (fc, flags, val[i]))
                     db.commit()
-            conn.execute("update validador set active = 1 where ip = ?", (val[i],))
+            conn.execute("update validador set active = 1, amount = ? where ip = ?", (amount, val[i]))
             db.commit()
         return jsonify({"status": 1})
-    
     else:
         for i in range(3):
-            select = conn.execute("select flags, flag_count, total_validations from validador where ip = ? ", (val[i],)).fetchone()
+            select = conn.execute("select flags, flag_count, total_validations, amount from validador where ip = ? ", (val[i],)).fetchone()
+            value = getValue(id)
+            value = ceil(value/20)
+            amount = select[3]
             if r[i] == 1:
                 flags = select[0] + 1
                 blocked = 0
@@ -218,6 +248,7 @@ def validate(id):
                 conn.execute("update validador set flag_count = 0, flags = ?, blocked = ? where ip = ?", (flags, blocked, val[i]))
                 db.commit()
             else:
+                amount = select[3] + value
                 flags = select[0]
                 if flags > 0:
                     fc = select[1] + 1
@@ -226,7 +257,7 @@ def validate(id):
                         fc = 0
                     conn.execute("update validador set flag_count = ?, flags = ? where ip = ?", (fc, flags, val[i]))
                     db.commit()
-            conn.execute("update validador set active = 1 where ip = ?", (val[i],))
+            conn.execute("update validador set active = 1, amount = ? where ip = ?", (amount, val[i]))
             db.commit()
         return jsonify({"status": 2})
 
