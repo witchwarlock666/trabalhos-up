@@ -30,16 +30,17 @@ void p(Graph *graph, No *no, char *title) {
 }
 
 int main() {
-    // Graph *graph = initGraph();
+    Graph *graph = initGraph();
     // insertMovie(graph, 53137, "movies.tsv");
     Tree *tree = initTree();
 
     // getMovies(graph, "movies.tsv");
     getNames(tree, "actors.tsv");
-    printTree(tree->root);
-    // char *title = (char *)malloc(sizeof(char)*400);
+    // filePrint(tree->root);
+    // printTree(tree->root);
+    char *title = (char *)malloc(sizeof(char)*400);
 
-    // p(graph, tree->root, title);
+    p(graph, tree->root, title);
 
     // int *movieList = (int *)malloc(sizeof(int));
     // int *size = calloc(sizeof(int), 1);
@@ -76,8 +77,8 @@ int main() {
     // imdbConnect(graph, 3, 4);
     // imdbConnect(graph, 1, 1);
 
-    // printGraph(graph);
+    printGraph(graph);
 
-    // freeGraph(graph);
+    freeGraph(graph);
     freeTree(tree);
 }

@@ -188,6 +188,51 @@ void freeNo(No *no) {
     return;
 }
 
+int *printTree2(No *no, FILE* file, int *list, int *size) {
+    if (!no) return list;
+
+    list = printTree2(no->left, file, list, size);
+    list = printTree2(no->right, file, list, size);
+    if (no->color) {
+        *size += 1;
+        list = (int *)realloc(list, sizeof(int)*(*size));
+        list[*size-1] = no->imdb;
+    }
+    return list;
+}
+
+void printNo(No *no, FILE *file) {
+    if (!no) return;
+
+    if (no->left) fprintf(file, "%d -> %d;\n", no->imdb, no->left->imdb);
+    if (no->right) fprintf(file, "%d -> %d;\n", no->imdb, no->right->imdb);
+    
+    printNo(no->left, file);
+    printNo(no->right, file);
+}
+
+void filePrint(No *no) {
+    FILE *file = fopen("tree3.dot", "w");
+    if (!file) {
+        printf("Erro!");
+        return;
+    }
+    fprintf(file, "digraph G {\ngraph [ratio=.48];\nnode[style=filled, color=black, shape=circle, width=.6, fontname=Helvetica, fontweight=bold, fontcolor=white, fontsize=24, fixedsize=true];\n");
+    int *list = (int *)malloc(sizeof(int));
+    int *size = (int *)calloc(sizeof(int), 1);
+    list = printTree2(no, file, list, size);
+    for (int i = 0; i < *size; i++) {
+        fprintf(file, "%d", list[i]);
+        if (i < *size - 1) {
+            fprintf(file, ", ");
+        }
+    }
+    fprintf(file, "\n[fillcolor=red];\n");
+    printNo(no, file);
+    fprintf(file, "}");
+    fclose(file);
+}
+
 void printTree(struct no* root) {
     if (root == NULL)
         return;
@@ -213,7 +258,7 @@ void getNames(Tree *tree, char *filename) {
     char *titles;
     char *trash;
 
-    while (i < 22) {
+    while (!feof(file)) {
         fgets(buffer, 400, file);
         imdbstr = strtok(buffer, "\t");
         imdb = atoi(imdbstr + 2);
