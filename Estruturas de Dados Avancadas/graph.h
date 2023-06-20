@@ -1,81 +1,38 @@
+#ifndef GRAPH_H
+#define GRAPH_H
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-struct node {
-    int vertex;
+// Graph node struct
+typedef struct node {
     int imdb;
-    struct node *next;
-};
+    char *title;
+    int n_neighbors;
+    int *neighbors;
+} Node;
 
-struct edge {
-    
-}
+// Graph struct
+typedef struct graph {
+    int n_nodes;
+    Node **nodes;
+} Graph;
 
-struct Graph {
-    int numVertices;
-    struct node **nodes;
-    struct node **adjLists;
-};
+void freeGraph(Graph *graph);
+Node *createNode(int imdb, char *label);
+void imdbConnect(Graph *graph, int imdb1, int imdb2);
+void connect(Node *node1, Node *node2);
+void connectNodes(Node *a, Node *b);
+Graph *initGraph();
+void addNode(Graph *graph, Node *node);
+void insertNode(Graph *graph, int imdb, char *label);
+Node *getNode(Graph *graph, int imdb);
+int exists(Graph *graph, int imdb);
+void printNode(Graph *graph, Node *node, Node **list, int n, FILE *file);
+void printGraph(Graph *graph);
+void printGraph2(Graph *graph);
+void getMovies(Graph *graph, char *filename);
+int insertMovie(Graph *graph, int imdb, char *filename, char **title);
 
-// Create a node
-struct node *createNode(struct Graph *graph) {
-    struct node *newNode = malloc(sizeof(struct node));
-    if (newNode == NULL) return NULL;
-    newNode->vertex = graph->numVertices;
-    newNode->next = NULL;
-    newNode->imdb = 0;
-
-    graph->nodes = realloc(graph->nodes, sizeof(graph->nodes) + sizeof(struct node*));
-    graph->adjLists = realloc(graph->adjLists, sizeof(graph->adjLists) + sizeof(struct node*));
-    graph->nodes[graph->numVertices] = newNode;
-    graph->numVertices += 1;
-    return newNode;
-}
-
-// Create a graph
-struct Graph *createAGraph(int vertices) {
-    struct Graph *graph = malloc(sizeof(struct Graph));
-    graph->numVertices = 0;
-
-    graph->adjLists = NULL;
-    graph->nodes = NULL;
-
-    return graph;
-}
-
-int findNode(struct Graph *graph, int imdb) {
-    for (int i = 0; i < graph->numVertices; i++) {
-        if (graph->nodes[i]->imdb == imdb) {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
-// Add edge
-void addEdge(struct Graph *graph, int s, int d) {
-    // Add edge from s to d
-    struct node *newNode = createNode(graph);
-    newNode->next = graph->adjLists[s];
-    graph->adjLists[s] = newNode;
-
-    // Add edge from d to s
-    newNode = createNode(graph);
-    newNode->next = graph->adjLists[d];
-    graph->adjLists[d] = newNode;
-}
-
-// Print the graph
-void printGraph(struct Graph *graph) {
-    int v;
-    for (v = 0; v < graph->numVertices; v++) {
-        struct node *temp = graph->adjLists[v];
-        printf("\n Vertex %d\n: ", v);
-        while (temp) {
-            printf("%d -> ", temp->vertex);
-            temp = temp->next;
-        }
-        printf("\n");
-    }
-}
+#endif
