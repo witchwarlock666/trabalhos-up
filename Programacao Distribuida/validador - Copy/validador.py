@@ -97,6 +97,10 @@ def cadastrar(amount):
 def root():
     return "aaa"
 
+@app.route("/ping")
+def ping():
+    return "pong"
+
 @app.route("/createdb", methods = ['GET'])
 def createDatabase():
     db = sqlite3.connect("validador.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)

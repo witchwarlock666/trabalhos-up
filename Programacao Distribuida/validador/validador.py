@@ -97,6 +97,10 @@ def cadastrar(amount):
 def root():
     return "aaa"
 
+@app.route("/ping")
+def ping():
+    return "pong"
+
 @app.route("/createdb", methods = ['GET'])
 def createDatabase():
     db = sqlite3.connect("validador.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
@@ -215,13 +219,13 @@ def validar(id):
         value = transaction["valor"]
         amount = rem["qtdMoeda"]
         
+        t = datetime.strptime(getTime(), "%a, %d %b %Y %H:%M:%S %Z")
+        tstr = datetime.strftime(t, "%a, %d %b %Y %H:%M:%S %Z")
+        
         if lastTrans and len(lastTrans):
             hTrans = datetime.strptime(transaction["horario"], "%a, %d %b %Y %H:%M:%S %Z")
             hLastTrans = datetime.strptime(lastTrans[0], "%Y-%m-%d %H:%M:%S")
-        
-        t = datetime.strptime(getTime(), "%a, %d %b %Y %H:%M:%S %Z")
-        tstr = datetime.strftime(t, "%a, %d %b %Y %H:%M:%S %Z")
-        if not lastTrans and not len(lastTrans):
+
             if t < hTrans or hTrans < hLastTrans:
                 print("1")
                 return jsonify({"status": 2, "chave": key})

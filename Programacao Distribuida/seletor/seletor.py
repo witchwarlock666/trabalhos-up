@@ -42,10 +42,10 @@ def chooseValidador():
                 sum = conn.execute("select sum(amount) from validador where active = 1 and blocked = 0").fetchall()
                 sum = sum[0][0]
                 
-                saldos = list(map(lambda s: max(5.0, min((s/sum) * 100, 40.0)), amounts))
-                saldos = array(saldos)
-                saldos /= saldos.sum()
-                val = choice(ips, 3, False, saldos)
+                amounts = list(map(lambda s: max(5.0, min((s/sum) * 100, 40.0)), amounts))
+                amounts = array(amounts)
+                amounts /= amounts.sum()
+                val = choice(ips, 3, False, amounts)
                 val = list(val)
                 return val
             t2 = datetime.strptime(getTime(), "%a, %d %b %Y %H:%M:%S %Z")
@@ -73,13 +73,13 @@ def validation(ip, id):
         conn = db.cursor()
         
         url = "http://" + ip + "/validar/" + str(id)
-        res = requests.get(url=url)
-        res = res.json()
+        r = requests.get(url=url)
+        r = r.json()
         
         select = conn.execute("select key from validador where ip = ?", (ip,)).fetchone()
         
-        if res["chave"] == select[0]:
-            return res["status"]
+        if r["chave"] == select[0]:
+            return r["status"]
         else:
             return 0
             
@@ -153,6 +153,20 @@ def register(ip, amount):
         return jsonify({"status": 0})
 
     return jsonify({"status": 2})
+
+@app.route("/validador/<string:ip>")
+def remove(ip):
+    db = sqlite3.connect("seletor.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+    conn = db.cursor()
+    
+    select = conn.execute("select * from validador where ip = ?", (ip,)).fetchone()
+
+    if select:
+        conn.execute("delete from validador where ip = ?", (ip,))
+        db.commit()
+        return jsonify({"status": 1})
+    
+    return jsonify({"status": 0})
 
 @app.route("/validador/<int:id>")
 def validate(id):
