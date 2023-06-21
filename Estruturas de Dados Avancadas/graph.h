@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "tree.h"
 
 // Graph node struct
 typedef struct node {
@@ -33,7 +34,6 @@ int exists(Graph *graph, int imdb);
 void printNode(Graph *graph, Node *node, Node **list, int n, FILE *file);
 void printGraph(Graph *graph);
 void printGraph2(Graph *graph);
-void getMovies(Graph *graph, char *filename);
 int insertMovie(Graph *graph, int imdb, char *filename, char **title);
 
 #endif

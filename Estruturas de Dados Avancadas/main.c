@@ -1,6 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 // #include "graph.c"
+
+#include "common.c"
+
 #include "tree.c"
+#include "graph.c"
 // #include "graph.c"
 
 void p(Graph *graph, No *no, char *title, Tree *tree) {
@@ -38,7 +42,7 @@ void p(Graph *graph, No *no, char *title, Tree *tree) {
             }
         }
     }
-    printf("%d\n", no->imdb);
+    if (no->imdb % 1000000 == 0)printf("%d\n", no->imdb);
 }
 
 int main() {
@@ -48,8 +52,8 @@ int main() {
     Tree *graphTree = initTree();
 
     // getMovies(graph, "movies.tsv");
+    getMovies(graph, "movies.tsv", graphTree);
     getNames(tree, "actors.tsv");
-    // getMovies(graph, "movies.tsv");
     // for (int i =0; i < graph->n_nodes; i++) {
     //     insertNoGraph(graphTree, graph->nodes[i]->imdb, graph->nodes[i]);
     // }
@@ -81,7 +85,7 @@ int main() {
 
     // printTree(tree->root);
 
-    printGraph2(graph);
+    // printGraph2(graph);
 
     // insertNode(graph, 1, "aa");
     // insertNode(graph, 2, "bb");

@@ -1,10 +1,7 @@
-#include "tree.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#include "graph.c"
+#include "tree.h"
 
 Tree *initTree() {
     Tree *tree = (Tree *)malloc(sizeof(Tree));
@@ -290,6 +287,8 @@ void getNames(Tree *tree, char *filename) {
     char *buffer = (char *)malloc(sizeof(char) * 200);
     fgets(buffer, 105, file);
 
+    printf("Entrou\n");
+
     int i = 0;
     char *imdbstr;
     int imdb;
@@ -297,7 +296,7 @@ void getNames(Tree *tree, char *filename) {
     char *trash;
 
     while (!feof(file)) {
-        fgets(buffer, 400, file);
+        fgets(buffer, 200, file);
         imdbstr = strtok(buffer, "\t");
         imdb = atoi(imdbstr + 2);
 
@@ -318,8 +317,10 @@ void getNames(Tree *tree, char *filename) {
 
         insertNo(tree, imdb, titles);
         ++i;
-        if (i % 1000000 == 0) printf("%d - %d\n", i, imdb);
+        if (i % 10000 == 0) printf("%d - %d\n", i, imdb);
     }
+
+    printf("%d", i);
 
     // Close the file
     fclose(file);

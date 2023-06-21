@@ -31,5 +31,7 @@ void rotateLeft(Tree *tree, No *no);
 void getNames(Tree *tree, char *filename);
 void freeTree(Tree *tree);
 void freeNo(No *no);
+No *createNoGraph(int imdb, Node *node);
+void insertNoGraph(Tree *tree, int imdb, Node *node);
 
 #endif

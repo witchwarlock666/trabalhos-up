@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "graph.h"
 
 // Clear graph from memory
@@ -17,14 +16,15 @@ void freeGraph(Graph *graph) {
 }
 
 // Create a node with imdb Id and movie title
-Node *createNode(int imdb, char *title) {
-    Node *node = (Node *)calloc(sizeof(Node), 1);
+Node* createNode(int imdb, char* title) {
+    Node* node = (Node*)calloc(sizeof(Node), 1);
     node->imdb = imdb;
-    char *str = malloc(sizeof(char) * 400);
-    strcpy(str, title);
-    node->title = str;
+    int len = strlen(title);
+    node->title = (char*)malloc(sizeof(char) * len + 1);
+    strcpy(node->title, title);
+    node->title[len] = '\0';
     node->n_neighbors = 0;
-    node->neighbors = (int *)malloc(node->n_neighbors*sizeof(int));
+    node->neighbors = (int*)malloc(node->n_neighbors * sizeof(int));
     return node;
 }
 
@@ -152,41 +152,7 @@ void printGraph2(Graph *graph) {
 }
 
 // Gets movies from file and inserts in graph
-void getMovies(Graph *graph, char *filename) {
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Erro!");
-        return;
-    }
-    char *buffer = malloc(sizeof(char) * 400);
-    fgets(buffer, 105, file);
 
-    int i = 0;
-    char *imdbstr;
-    int imdb;
-    char *type;
-    char *title;
-
-    while (!feof(file)) {
-        fgets(buffer, 400, file);
-        imdbstr = strtok(buffer, "\t");
-        imdb = atoi(imdbstr + 2);
-
-        type = strtok(NULL, "\t");
-        if (type == NULL) continue;
-
-        title = strtok(NULL, "\t");
-        if (title == NULL) continue;
-
-        if (strcmp(type, "movie") == 0) {
-            insertNode(graph, imdb, title);
-            ++i;
-            if (i % 100000 == 0) {
-                printf("%d - %d\n", i, imdb);
-            }
-        }
-    }
-}
 
 int insertMovie(Graph *graph, int imdb, char *filename, char **title) {
     FILE *file = fopen(filename, "r");
