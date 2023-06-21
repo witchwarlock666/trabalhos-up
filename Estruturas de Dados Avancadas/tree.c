@@ -4,10 +4,25 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "graph.c"
+
 Tree *initTree() {
     Tree *tree = (Tree *)malloc(sizeof(Tree));
-    tree->root = (No *)malloc(sizeof(No));
+    tree->root = NULL;
     return tree;
+}
+
+No *createNoGraph(int imdb, Node *node) {
+    No *no = (No *)malloc(sizeof(No));
+    no->imdb = imdb;
+    no->color = 1;
+    no->qntMovies = 0;
+    no->movies = NULL;
+    no->node = node;
+    no->parent = NULL;
+    no->left = NULL;
+    no->right = NULL;
+    return no;
 }
 
 No *createNo(int imdb, char *movies) {
@@ -39,15 +54,29 @@ No *createNo(int imdb, char *movies) {
     no->color = 1;
     no->qntMovies = qntMovies;
     no->movies = titles;
+    no->node = NULL;
     no->parent = NULL;
     no->left = NULL;
     no->right = NULL;
     return no;
 }
 
+void insertNoGraph(Tree *tree, int imdb, Node *node) {
+    No *no = createNoGraph(imdb, node);
+    if (!tree->root) {
+        tree->root = (No *)malloc(sizeof(No));
+        no->color = 0;
+        tree->root = no;
+        return;
+    }
+    insert(tree->root, no);
+    fixTree(tree, no);
+}
+
 void insertNo(Tree *tree, int imdb, char *movies) {
     No *no = createNo(imdb, movies);
-    if (tree->root->color < 0) {
+    if (!tree->root) {
+        tree->root = (No *)malloc(sizeof(No));
         no->color = 0;
         tree->root = no;
         return;
@@ -180,6 +209,15 @@ void freeTree(Tree *tree) {
     free(tree);
 }
 
+Node *getNodeTree(No *no, int imdb) {
+    if (!no) return NULL;
+
+    if (imdb < no->imdb) return getNodeTree(no->left, imdb);
+    if (imdb > no->imdb) return getNodeTree(no->right, imdb);
+    if (imdb == no->imdb) return no->node;
+    return NULL;
+}
+
 void freeNo(No *no) {
     if (!no) return;
     freeNo(no->left);
@@ -212,12 +250,12 @@ void printNo(No *no, FILE *file) {
 }
 
 void filePrint(No *no) {
-    FILE *file = fopen("tree3.dot", "w");
+    FILE *file = fopen("tree4.dot", "w");
     if (!file) {
         printf("Erro!");
         return;
     }
-    fprintf(file, "digraph G {\ngraph [ratio=.48];\nnode[style=filled, color=black, shape=circle, width=.6, fontname=Helvetica, fontweight=bold, fontcolor=white, fontsize=24, fixedsize=true];\n");
+    fprintf(file, "digraph G {\nnode[style=filled, color=black, shape=circle, fontname=Helvetica, fontweight=bold, fontcolor=white, fontsize=24];\n");
     int *list = (int *)malloc(sizeof(int));
     int *size = (int *)calloc(sizeof(int), 1);
     list = printTree2(no, file, list, size);
@@ -280,7 +318,7 @@ void getNames(Tree *tree, char *filename) {
 
         insertNo(tree, imdb, titles);
         ++i;
-        printf("%d - %d\n", i, imdb);
+        if (i % 1000000 == 0) printf("%d - %d\n", i, imdb);
     }
 
     // Close the file

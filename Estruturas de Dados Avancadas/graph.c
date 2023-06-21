@@ -60,13 +60,9 @@ void connect(Node *node1, Node *node2) {
 }
 
 // Connects 2 nodes based on their imdb Id
-void imdbConnect(Graph *graph, int imdb1, int imdb2) {
-    Node *node1 = getNode(graph, imdb1);
-    Node *node2 = getNode(graph, imdb2);
-
-    if (strcmp(node1->title, "1984") == 0 || strcmp(node2->title, "1984") == 0) {
-        printf("");
-    }
+void imdbConnect(Graph *graph, Node *node1, Node *node2) {
+    // Node *node1 = getNode(graph, imdb1);
+    // Node *node2 = getNode(graph, imdb2);
 
     if (node1 == node2) return;
 
@@ -98,15 +94,15 @@ void addNode(Graph *graph, Node *node) {
                                     (graph->n_nodes+1)*sizeof(Node *));
 
     graph->nodes[graph->n_nodes] = node;
+    node->index = graph->n_nodes;
     graph->n_nodes += 1;
 }
 
 // Create node and insert it in the graph
-void insertNode(Graph *graph, int imdb, char *title) {
-    if (!exists(graph, imdb)) {
-        Node *node = createNode(imdb, title);
-        addNode(graph, node);
-    }
+Node *insertNode(Graph *graph, int imdb, char *title) {
+    Node *node = createNode(imdb, title);
+    addNode(graph, node);
+    return node;
 }
 
 // Dot language node print
@@ -124,14 +120,14 @@ void printNode(Graph *graph, Node *node, Node **list, int n, FILE *file) {
         }
         if (cont) {
             fprintf(file, "\"%d - %s\" -- ", node->imdb, node->title);
-            fprintf(file, "\"%d - %s\"\n", node->imdb, neighbor->title);
+            fprintf(file, "\"%d - %s\"\n", neighbor->imdb, neighbor->title);
         }
     }
 }
 
 // Dot language graph print
 void printGraph(Graph *graph) {
-    FILE *file = fopen("graph.dot", "w");
+    FILE *file = fopen("graph2.dot", "w");
     if (!file) {
         return;
     }
@@ -162,7 +158,7 @@ void getMovies(Graph *graph, char *filename) {
         printf("Erro!");
         return;
     }
-    char *buffer = malloc(sizeof(char) * 200);
+    char *buffer = malloc(sizeof(char) * 400);
     fgets(buffer, 105, file);
 
     int i = 0;
@@ -171,7 +167,7 @@ void getMovies(Graph *graph, char *filename) {
     char *type;
     char *title;
 
-    while (i < 50) {
+    while (!feof(file)) {
         fgets(buffer, 400, file);
         imdbstr = strtok(buffer, "\t");
         imdb = atoi(imdbstr + 2);
@@ -185,16 +181,14 @@ void getMovies(Graph *graph, char *filename) {
         if (strcmp(type, "movie") == 0) {
             insertNode(graph, imdb, title);
             ++i;
-            printf("%d - %d\n", i, imdb);
+            if (i % 100000 == 0) {
+                printf("%d - %d\n", i, imdb);
+            }
         }
     }
 }
 
 int insertMovie(Graph *graph, int imdb, char *filename, char **title) {
-    if (exists(graph, imdb)) {
-        return 0;
-    }
-
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Erro - %d\n", imdb);

@@ -1,46 +1,63 @@
 #define _CRT_SECURE_NO_WARNINGS
 // #include "graph.c"
 #include "tree.c"
-#include "graph.c"
+// #include "graph.c"
 
-void p(Graph *graph, No *no, char *title) {
+void p(Graph *graph, No *no, char *title, Tree *tree) {
     if (!no) return;
 
-    p(graph, no->left, title);
-    p(graph, no->right, title);
+    p(graph, no->left, title, tree);
+    p(graph, no->right, title, tree);
 
     int *movieList = no->movies;
 
     for (int i = 0; i < no->qntMovies; i++) {
-        int c = insertMovie(graph, movieList[i], "movies.tsv", &title);
-        if (c) {
-            insertNode(graph, movieList[i], title);
+        Node *node = getNodeTree(tree->root, movieList[i]);
+        if (!node) {
+            int c = insertMovie(graph, movieList[i], "movies.tsv", &title);
+            if (c == 1) {
+                node = insertNode(graph, movieList[i], title);
+                insertNoGraph(tree, movieList[i], node);
+            }
+            else {
+                movieList[i] = 0;
+            }
         }
-        else {
-            movieList[i] = 0;
-        }
+        
+        
     }
     for (int i = 0; i < no->qntMovies; i++) {
         if (movieList[i]) {
             for (int j = 0; j < no->qntMovies; j++) {
-                if (movieList[j]) imdbConnect(graph, movieList[i], movieList[j]);
+                if (movieList[j]) {
+                    Node *node1 = getNodeTree(tree->root, no->movies[i]);
+                    Node *node2 = getNodeTree(tree->root, no->movies[j]);
+                    if (!node1 || !node2) continue;
+                    imdbConnect(graph, node1, node2);
+                }
             }
         }
     }
+    printf("%d\n", no->imdb);
 }
 
 int main() {
     Graph *graph = initGraph();
     // insertMovie(graph, 53137, "movies.tsv");
     Tree *tree = initTree();
+    Tree *graphTree = initTree();
 
     // getMovies(graph, "movies.tsv");
     getNames(tree, "actors.tsv");
+    // getMovies(graph, "movies.tsv");
+    // for (int i =0; i < graph->n_nodes; i++) {
+    //     insertNoGraph(graphTree, graph->nodes[i]->imdb, graph->nodes[i]);
+    // }
     // filePrint(tree->root);
     // printTree(tree->root);
     char *title = (char *)malloc(sizeof(char)*400);
 
-    p(graph, tree->root, title);
+    p(graph, tree->root, title, graphTree);
 
     // int *movieList = (int *)malloc(sizeof(int));
     // int *size = calloc(sizeof(int), 1);
@@ -64,7 +81,7 @@ int main() {
 
     // printTree(tree->root);
 
-    // printGraph2(graph);
+    printGraph2(graph);
 
     // insertNode(graph, 1, "aa");
     // insertNode(graph, 2, "bb");

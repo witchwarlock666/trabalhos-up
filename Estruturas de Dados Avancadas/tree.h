@@ -4,12 +4,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "graph.h"
 
 typedef struct no {
     int imdb;
     int color;
     int qntMovies;
     int *movies;
+    Node *node;
     struct no *parent;
     struct no *left;
     struct no *right;
