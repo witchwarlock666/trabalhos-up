@@ -93,6 +93,7 @@ def searchGames(query):
             
 def search(res):
     if res.method == "POST":
+        print(res.POST)
         form = searchGame(res.POST)
         print(form)
         query = form.cleaned_data["query"]

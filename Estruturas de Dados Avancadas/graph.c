@@ -16,13 +16,15 @@ void freeGraph(Graph *graph) {
 }
 
 // Create a node with imdb Id and movie title
-Node* createNode(int imdb, char* title) {
+Node* createNode(int imdb, char* title, int year) {
     Node* node = (Node*)calloc(sizeof(Node), 1);
     node->imdb = imdb;
     int len = strlen(title);
     node->title = (char*)malloc(sizeof(char) * len + 1);
     strcpy(node->title, title);
     node->title[len] = '\0';
+    node->printed = 0;
+    node->year = year;
     node->n_neighbors = 0;
     node->neighbors = (int*)malloc(node->n_neighbors * sizeof(int));
     return node;
@@ -99,56 +101,26 @@ void addNode(Graph *graph, Node *node) {
 }
 
 // Create node and insert it in the graph
-Node *insertNode(Graph *graph, int imdb, char *title) {
-    Node *node = createNode(imdb, title);
+Node *insertNode(Graph *graph, int imdb, char *title, int year) {
+    Node *node = createNode(imdb, title, year);
     addNode(graph, node);
     return node;
 }
 
 // Dot language node print
-void printNode(Graph *graph, Node *node, Node **list, int n, FILE *file) {
-    int i;
-    int cont;
-    for(i=0; i<node->n_neighbors; i++) {
-        Node *neighbor = getNode(graph, node->neighbors[i]);
-        cont = 1;
-        for (int j = 0; j < n; j++) {
-            if (list[j] == neighbor) {
-                cont = 0;
-            }
-            if (!cont) break;
-        }
-        if (cont) {
-            fprintf(file, "\"%d - %s\" -- ", node->imdb, node->title);
-            fprintf(file, "\"%d - %s\"\n", neighbor->imdb, neighbor->title);
-        }
-    }
-}
 
-// Dot language graph print
-void printGraph(Graph *graph) {
-    FILE *file = fopen("graph2.dot", "w");
-    if (!file) {
-        return;
-    }
-
-    int i;
-    fprintf(file, "graph {\n");
-    Node **list = malloc(sizeof(Node*) * graph->n_nodes);
-    for(i=0; i<graph->n_nodes; i++) {
-        list[i] = graph->nodes[i];
-        printNode(graph, graph->nodes[i], list, graph->n_nodes, file);
-    }
-    fprintf(file, "}\n");
-    fclose(file);
-    free(list);
-}
 
 // Prints all nodes in graph for debug
 void printGraph2(Graph *graph) {
-    for(int i=0; i<graph->n_nodes; i++) {
-        printf("%d - %s\n", graph->nodes[i]->imdb, graph->nodes[i]->title);
+    FILE *file = fopen("p.txt", "w");
+    if (!file) {
+        printf("Erro!");
+        return;
     }
+    for(int i=0; i<graph->n_nodes; i++) {
+        fprintf(file, "%d - %s - %d\n", graph->nodes[i]->imdb, graph->nodes[i]->title, graph->nodes[i]->year);
+    }
+    fclose(file);
 }
 
 // Gets movies from file and inserts in graph

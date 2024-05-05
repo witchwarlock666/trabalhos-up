@@ -10,6 +10,8 @@
 typedef struct node {
     int imdb;
     char *title;
+    int printed;
+    int year;
     int index;
     int n_neighbors;
     int *neighbors;
@@ -22,17 +24,15 @@ typedef struct graph {
 } Graph;
 
 void freeGraph(Graph *graph);
-Node *createNode(int imdb, char *label);
+Node *createNode(int imdb, char *label, int year);
 void imdbConnect(Graph *graph, Node *node1, Node *node2);
 void connect(Node *node1, Node *node2);
 void connectNodes(Node *a, Node *b);
 Graph *initGraph();
 void addNode(Graph *graph, Node *node);
-Node *insertNode(Graph *graph, int imdb, char *label);
+Node *insertNode(Graph *graph, int imdb, char *label, int year);
 Node *getNode(Graph *graph, int imdb);
 int exists(Graph *graph, int imdb);
-void printNode(Graph *graph, Node *node, Node **list, int n, FILE *file);
-void printGraph(Graph *graph);
 void printGraph2(Graph *graph);
 int insertMovie(Graph *graph, int imdb, char *filename, char **title);
 

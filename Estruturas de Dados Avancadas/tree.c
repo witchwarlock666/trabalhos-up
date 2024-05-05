@@ -206,15 +206,6 @@ void freeTree(Tree *tree) {
     free(tree);
 }
 
-Node *getNodeTree(No *no, int imdb) {
-    if (!no) return NULL;
-
-    if (imdb < no->imdb) return getNodeTree(no->left, imdb);
-    if (imdb > no->imdb) return getNodeTree(no->right, imdb);
-    if (imdb == no->imdb) return no->node;
-    return NULL;
-}
-
 void freeNo(No *no) {
     if (!no) return;
     freeNo(no->left);
@@ -287,13 +278,13 @@ void getNames(Tree *tree, char *filename) {
     char *buffer = (char *)malloc(sizeof(char) * 200);
     fgets(buffer, 105, file);
 
-    printf("Entrou\n");
-
-    int i = 0;
+    // int i = 0;
     char *imdbstr;
     int imdb;
     char *titles;
     char *trash;
+
+    printf("Gerando arvore...\n");
 
     while (!feof(file)) {
         fgets(buffer, 200, file);
@@ -316,11 +307,9 @@ void getNames(Tree *tree, char *filename) {
         if (titles == NULL) continue;
 
         insertNo(tree, imdb, titles);
-        ++i;
-        if (i % 10000 == 0) printf("%d - %d\n", i, imdb);
+        // ++i;
+        // if (i % 1000000 == 0) printf("%d - %d\n", i, imdb);
     }
-
-    printf("%d", i);
 
     // Close the file
     fclose(file);
